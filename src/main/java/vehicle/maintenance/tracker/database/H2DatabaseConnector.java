@@ -1,4 +1,4 @@
-package vehicle.maintainence.tracker.dbh;
+package vehicle.maintenance.tracker.database;
 
 import java.sql.*;
 

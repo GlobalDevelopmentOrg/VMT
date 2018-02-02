@@ -1,6 +1,6 @@
-package vehicle.maintainence.tracker;
+package vehicle.maintenance.tracker;
 
-import vehicle.maintainence.tracker.dbh.H2DatabaseConnector;
+import vehicle.maintenance.tracker.database.H2DatabaseConnector;
 import org.h2.tools.DeleteDbFiles;
 import org.junit.*;
 

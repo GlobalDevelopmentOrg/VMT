@@ -1,4 +1,4 @@
-package vehicle.maintainence.tracker;
+package vehicle.maintenance.tracker;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
