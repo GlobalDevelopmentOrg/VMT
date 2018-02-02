@@ -1,0 +1,1 @@
+This file should be blocked from being pushed to master branch
