@@ -1,2 +1,2 @@
-# Track-O-Truck
-GUI project in Java for tracking the maintenance requirements for Trucks and installed parts. 
+# Name to be decided
+This application will aim to track maintainence requirements for vehicles and installed parts. 
