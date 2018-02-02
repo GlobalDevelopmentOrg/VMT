@@ -9,7 +9,7 @@
     <url>http://maven.apache.org</url>
 
     <dependencies>
-        <!-- h2 embedded database -->
+        <!-- h2 embedded dbh -->
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
