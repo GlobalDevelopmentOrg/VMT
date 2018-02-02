@@ -1,4 +1,0 @@
-hello
-
-got git working
-goodbye
