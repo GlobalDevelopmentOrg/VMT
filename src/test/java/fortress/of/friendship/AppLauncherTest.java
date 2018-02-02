@@ -1,6 +1,6 @@
 package fortress.of.friendship;
 
-import fortress.of.friendship.database.H2DatabaseConnector;
+import fortress.of.friendship.dbh.H2DatabaseConnector;
 import org.h2.tools.DeleteDbFiles;
 import org.junit.*;
 
@@ -45,7 +45,7 @@ public class AppLauncherTest {
 
         try{
             int success = AppLauncherTest.DATABASE.executeUpdate(update);
-            Assert.assertNotEquals("unable it update database", -1, success);
+            Assert.assertNotEquals("unable it update dbh", -1, success);
 
             ResultSet rs = AppLauncherTest.DATABASE.executeQuery(query);
 
@@ -53,14 +53,14 @@ public class AppLauncherTest {
             String getRegistration = rs.getString("registration");
             int getMileage = Integer.parseInt(rs.getString("mileage"));
 
-            // close result and database connection
+            // close result and dbh connection
             rs.close();
             AppLauncherTest.DATABASE.close();
 
-            // assure database is not open
+            // assure dbh is not open
             Assert.assertTrue("Connection wasn't closed", !AppLauncherTest.DATABASE.isOpen());
 
-            // check values read from database match values wrote to database
+            // check values read from dbh match values wrote to dbh
             Assert.assertEquals("Retrieved registration doesn't match value set", setRegistration, getRegistration);
             Assert.assertEquals("Retrieved mileage doesn't match value set", setMileage, getMileage);
 
@@ -68,7 +68,7 @@ public class AppLauncherTest {
             Assert.assertTrue(e.getMessage(), false);
         }
 
-        // delete the test database files in /database/test
+        // delete the test dbh files in /dbh/test
         DeleteDbFiles.execute("database/test/", null, true);
     }
 
