@@ -1,6 +1,7 @@
 package fort.of.fri;
 
-import junit.framework.TestCase;
+import org.junit.Assert;
+import org.junit.Test;
 
 /**
  *   Unit tests ensure we run tests before making a pull request.
@@ -9,8 +10,11 @@ import junit.framework.TestCase;
  *   Write tests for new classes you create,
  *   this is ensure other developers don't break them.
  */
-public class AppTest extends TestCase {
+public class AppLauncherTest {
 
-
+    @Test
+    public void demo(){
+        Assert.assertTrue("This test will always be true", true);
+    }
 
 }
