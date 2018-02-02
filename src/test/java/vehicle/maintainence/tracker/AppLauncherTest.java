@@ -1,6 +1,6 @@
-package fortress.of.friendship;
+package vehicle.maintainence.tracker;
 
-import fortress.of.friendship.dbh.H2DatabaseConnector;
+import vehicle.maintainence.tracker.dbh.H2DatabaseConnector;
 import org.h2.tools.DeleteDbFiles;
 import org.junit.*;
 
