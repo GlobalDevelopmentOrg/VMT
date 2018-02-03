@@ -3,6 +3,13 @@ package vehicle.maintenance.tracker.examples;
 import vehicle.maintenance.tracker.api.VehicleAPI;
 import vehicle.maintenance.tracker.api.development.DatabaseDump;
 
+/**
+ * Demo <code>ApiExample</code>
+ * This class is only for demo purposes
+ *
+ * @Author Daile Alimo
+ * @Since 0.1-SNAPSHOT
+ */
 public class ApiExample {
 
     public static void main(String[] args){

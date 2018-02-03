@@ -4,7 +4,11 @@ import vehicle.maintenance.tracker.api.VehicleAPI;
 import vehicle.maintenance.tracker.api.development.MockDataGenerator;
 
 /**
- * Demo of the usage of MockDataGenerator
+ * Demo <code>GenerateMockDataExample</code>
+ * This class is only for demo purposes
+ *
+ * @Author Daile Alimo
+ * @Since 0.1-SNAPSHOT
  */
 public class GenerateMockDataExample {
 

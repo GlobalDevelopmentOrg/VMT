@@ -6,6 +6,14 @@ import vehicle.maintenance.tracker.model.VehiclePart;
 
 import java.util.List;
 
+/**
+ * Test class only for helping with development
+ * This class has 1 static method that will compile a String
+ * from a given <code>VehicleAPI</code>.
+ *
+ * @Author Daile Alimo
+ * @Since 0.1-SNAPSHOT
+ */
 public class DatabaseDump {
 
     public static String makeDataString(List<VehicleInformation> vehicleInformation, VehicleAPI vehicleAPI){

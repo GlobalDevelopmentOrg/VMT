@@ -1,7 +1,5 @@
 package vehicle.maintenance.tracker.model;
 
-import java.util.List;
-
 /**
  * A <code>VehicleInformation</code> represents a vehicle database entry
  *
@@ -23,7 +21,6 @@ public class VehicleInformation {
     }
 
     public VehicleInformation(String name, String registration, int mileage){
-        this.id = id;
         this.name = name;
         this.registration = registration;
         this.mileage = mileage;

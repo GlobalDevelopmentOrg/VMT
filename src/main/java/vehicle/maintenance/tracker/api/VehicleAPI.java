@@ -9,6 +9,13 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This class is the base API. It deals with interaction
+ * between the database.
+ *
+ * @Author Daile Alimo
+ * @Since 0.1-SNAPSHOT
+ */
 public class VehicleAPI implements VehicleApiMethods {
 
     // ./ is H2's way of selecting path for file, data is file name

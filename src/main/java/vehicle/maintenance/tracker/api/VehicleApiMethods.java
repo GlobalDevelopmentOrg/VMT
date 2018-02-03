@@ -5,6 +5,12 @@ import vehicle.maintenance.tracker.model.VehiclePart;
 
 import java.util.List;
 
+/**
+ * API method interface
+ *
+ * @Author Daile Alimo
+ * @Since 0.1-SNAPSHOT
+ */
 public interface VehicleApiMethods {
 
     List<VehicleInformation> getAllVehicleInformation();

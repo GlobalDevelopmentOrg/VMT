@@ -8,6 +8,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+/**
+ * Test class only for helping with development
+ * This class will generate mock data into the database.
+ *
+ * @Author Daile Alimo
+ * @Since 0.1-SNAPSHOT
+ */
 public class MockDataGenerator {
 
     private static VehicleAPI vehicleAPI;

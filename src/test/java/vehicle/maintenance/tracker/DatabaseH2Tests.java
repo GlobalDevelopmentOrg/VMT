@@ -7,6 +7,13 @@ import org.junit.*;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * DatabaseH2Tests
+ * for testing basic database functionality
+ *
+ * @Author Daile Alimo
+ * @Since 0.1-SNAPSHOT
+ */
 public class DatabaseH2Tests {
 
     private static final String TEST_DB_NAME = "test/test_db";
