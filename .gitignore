@@ -32,3 +32,6 @@ out/
 
 # maven
 dependency-reduced-pom.xml
+
+# packaged database file
+*.db
