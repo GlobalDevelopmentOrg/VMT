@@ -3,6 +3,23 @@ package vehicle.maintenance.tracker;
 import java.util.Date;
 
 public class Part {
+    // Constructor
+    public Part() {
+        ID = 0;
+        // Creates the install_date to the current date
+        Install_date = new Date();
+        // Need to do some math to set a future date of when a part needs to be checked
+        // Maintain_date = something
+        Name = "none";
+    }
+
+    public Part(int id, Date install_date, Date maintain_date, String name) {
+        ID = id;
+        Install_date = install_date;
+        Maintain_date = maintain_date;
+        Name = name;
+    }
+
     // Basic data types for a part
     private int ID;
     private Date Install_date;
