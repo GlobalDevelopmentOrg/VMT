@@ -5,58 +5,58 @@ import java.util.Date;
 public class Part {
     // Constructor
     public Part() {
-        ID = 0;
-        // Creates the install_date to the current date
-        Install_date = new Date();
+        id = 0;
+        // Creates the installDate to the current date
+        installDate = new Date();
         // Need to do some math to set a future date of when a part needs to be checked
-        // Maintain_date = something
-        Name = "none";
+        // maintainDate = something
+        name = "none";
     }
 
-    public Part(int id, Date install_date, Date maintain_date, String name) {
-        ID = id;
-        Install_date = install_date;
-        Maintain_date = maintain_date;
-        Name = name;
+    public Part(int id, Date installDate, Date maintainDate, String name) {
+        id = this.id;
+        installDate = this.installDate;
+        maintainDate = this.maintainDate;
+        name = this.name;
     }
 
     // Basic data types for a part
-    private int ID;
-    private Date Install_date;
-    private Date Maintain_date;
-    private String Name;
+    private int id;
+    private Date installDate;
+    private Date maintainDate;
+    private String name;
 
     // Getters and setters
-    public int getID() {
-        return ID;
+    public int getid() {
+        return id;
     }
 
-    public void setID(int id) {
-        ID = id;
+    public void setid(int id) {
+        id = this.id;
     }
 
-    public Date getInstall_date() {
-        return Install_date;
+    public Date getinstallDate() {
+        return installDate;
     }
 
-    public void setInstall_date(Date date) {
-        Install_date = date;
+    public void setinstallDate(Date date) {
+        installDate = date;
     }
 
-    public Date getMaintain_date() {
-        return Maintain_date;
+    public Date getmaintainDate() {
+        return maintainDate;
     }
 
-    public void setMaintain_date(Date date) {
-        Maintain_date = date;
+    public void setmaintainDate(Date date) {
+        maintainDate = date;
     }
 
-    public String getName() {
-        return Name;
+    public String getname() {
+        return name;
     }
 
-    public void setName(String name) {
-        Name = name;
+    public void setname(String name) {
+        name = this.name;
     }
 
 }

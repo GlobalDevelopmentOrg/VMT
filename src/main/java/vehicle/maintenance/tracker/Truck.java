@@ -5,49 +5,49 @@ import java.util.List;
 public class Truck {
 
     // Data types
-    private int Mileage;
-    private int ID;
-    private String Registration;
-    private List Parts;
+    private int mileage;
+    private int id;
+    private String registration;
+    private List parts;
 
     // Getters and setters
 
     public int getMileage() {
-        return Mileage;
+        return mileage;
     }
 
     public void setMileage(int mileage) {
-        Mileage = mileage;
+        this.mileage = mileage;
     }
 
     public int getID() {
-        return ID;
+        return this.id;
     }
 
     public void setID(int id) {
-        ID = id;
+        this.id = id;
     }
 
     public String getRegistration() {
-        return Registration;
+        return this.registration;
     }
 
     public void setRegistration(String registration) {
-        Registration = registration;
+        this.registration = registration;
     }
 
     public List getParts() {
-        return Parts;
+        return this.parts;
     }
 
     // If we are only adding 1 part
     public void addParts(Part part) {
-        Parts.add(part);
+        this.parts.add(part);
     }
 
     // Add if we are adding a list of parts in
     public void addParts(List parts) {
-        Parts.addAll(parts);
+        this.parts.addAll(parts);
     }
 
     // If we are starting with the list of parts
@@ -56,7 +56,7 @@ public class Truck {
     }
 
     public boolean hasParts() {
-        if (Parts.isEmpty()) {
+        if (this.parts.isEmpty()) {
             return false;
         } else {
             return true;
