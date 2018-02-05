@@ -13,7 +13,7 @@ public class Truck {
     // Getters and setters
 
     public int getMileage() {
-        return mileage;
+        return this.mileage;
     }
 
     public void setMileage(int mileage) {

@@ -5,19 +5,19 @@ import java.util.Date;
 public class Part {
     // Constructor
     public Part() {
-        id = 0;
+        this.id = 0;
         // Creates the installDate to the current date
-        installDate = new Date();
+        this.installDate = new Date();
         // Need to do some math to set a future date of when a part needs to be checked
         // maintainDate = something
-        name = "none";
+        this.name = "none";
     }
 
     public Part(int id, Date installDate, Date maintainDate, String name) {
-        id = this.id;
-        installDate = this.installDate;
-        maintainDate = this.maintainDate;
-        name = this.name;
+        this.id = id;
+        this.installDate = installDate;
+        this.maintainDate = maintainDate;
+        this.name = name;
     }
 
     // Basic data types for a part
@@ -28,35 +28,35 @@ public class Part {
 
     // Getters and setters
     public int getid() {
-        return id;
+        return this.id;
     }
 
     public void setid(int id) {
-        id = this.id;
+        this.id = id;
     }
 
     public Date getinstallDate() {
-        return installDate;
+        return this.installDate;
     }
 
     public void setinstallDate(Date date) {
-        installDate = date;
+        this.installDate = date;
     }
 
     public Date getmaintainDate() {
-        return maintainDate;
+        return this.maintainDate;
     }
 
     public void setmaintainDate(Date date) {
-        maintainDate = date;
+        this.maintainDate = date;
     }
 
     public String getname() {
-        return name;
+        return this.name;
     }
 
     public void setname(String name) {
-        name = this.name;
+        this.name = name;
     }
 
 }
