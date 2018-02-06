@@ -12,8 +12,8 @@ import javafx.stage.Stage;
 /**
  * Entry point for this application
  *
- * @Author Daile Alimo
- * @Since 0.1-SNAPSHOT
+ * @author Daile Alimo
+ * @since 0.1-SNAPSHOT
  */
 public class AppLauncher extends Application {
 
