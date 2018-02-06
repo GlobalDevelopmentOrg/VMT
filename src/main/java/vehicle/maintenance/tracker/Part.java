@@ -3,6 +3,12 @@ package vehicle.maintenance.tracker;
 import java.util.Date;
 
 public class Part {
+    // Basic data types for a part
+    private int id;
+    private Date installDate;
+    private Date maintainDate;
+    private String name;
+
     // Constructor
     public Part() {
         this.id = 0;
@@ -19,12 +25,6 @@ public class Part {
         this.maintainDate = maintainDate;
         this.name = name;
     }
-
-    // Basic data types for a part
-    private int id;
-    private Date installDate;
-    private Date maintainDate;
-    private String name;
 
     // Getters and setters
     public int getid() {

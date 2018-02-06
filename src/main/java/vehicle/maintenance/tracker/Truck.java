@@ -3,7 +3,6 @@ package vehicle.maintenance.tracker;
 import java.util.List;
 
 public class Truck {
-
     // Data types
     private int mileage;
     private int id;
@@ -11,7 +10,6 @@ public class Truck {
     private List parts;
 
     // Getters and setters
-
     public int getMileage() {
         return this.mileage;
     }
