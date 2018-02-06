@@ -2,31 +2,37 @@ package vehicle.maintenance.tracker;
 
 import java.util.Date;
 
+/**
+ * Part represents a detachable piece of machinery 
+ * that can be installed to a vehicle and have seperate 
+ * maintenance schedules. 
+ *
+ * @author add your name
+ * @since 0.1-SNAPSHOT
+ */
 public class Part {
-    // Basic data types for a part
+
     private int id;
     private Date installDate;
-    private Date maintainDate;
+    private Date scheduledMaintenanceDate;
     private String name;
 
-    // Constructor
     public Part() {
         this.id = 0;
-        // Creates the installDate to the current date
         this.installDate = new Date();
-        // Need to do some math to set a future date of when a part needs to be checked
-        // maintainDate = something
+	// TODO calculate or allow client to set a scheduled maintenants date
+	// for now just instantiate it to prevent null pointer errors.
+	this.scheduledMaintenanceDate = this.installDate;
         this.name = "none";
     }
 
     public Part(int id, Date installDate, Date maintainDate, String name) {
         this.id = id;
         this.installDate = installDate;
-        this.maintainDate = maintainDate;
+        this.scheduledMaintenanceDate = scheduledMaintenanceDate;
         this.name = name;
     }
 
-    // Getters and setters
     public int getid() {
         return this.id;
     }
