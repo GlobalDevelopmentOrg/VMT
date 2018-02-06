@@ -1,4 +1,4 @@
-package vehicle.maintenance.tracker;
+package vehicle.maintenance.tracker.models;
 
 import java.util.Date;
 
@@ -7,41 +7,50 @@ import java.util.Date;
  * that can be installed to a vehicle and have seperate 
  * maintenance schedules. 
  *
- * @author add your name
+ * @author Joe
  * @author Daile Alimo
  * @since 0.1-SNAPSHOT
  */
 public class Part {
 
     private int id;
-    private vehicleId; // id of vehicle this part belongs too
-    private Date installDate;
+    private int vehicleId; // id of vehicle this part belongs too
+    private Date installationDate;
     private Date scheduledMaintenanceDate;
     private String name;
 
-    // we can use this when we have data from database.
-    public Part(int id, int vehicleId, Date installDate, Date scheduledMaintenanceDate, String name) {
-        this.id = id;
-	this.vehicleId = vehicleId;
-        this.installDate = installDate;
-        this.scheduledMaintenanceDate = scheduledMaintenanceDate;
-        this.name = name;
+    /*
+            We have 2 constructors, the first for loading from the database
+            the second for creating a new entry to put into the database.
+            This class is immutable we do not wish to change data here once
+            instantiated. Instead we will update the database with any
+            changes made.
+     */
+    public Part(int id, int vehicleId, Date installationDate, Date scheduledMaintenanceDate, String name) {
+         this.id = id;
+         this.vehicleId = vehicleId;
+         this.installationDate = installationDate;
+         this.scheduledMaintenanceDate = scheduledMaintenanceDate;
+         this.name = name;
     }
 
-    // we use this constructor id will be auto generated when we submit it to database.
-    public Part(int vehicleId, Date installDate, Date scheduledMaintenanceDate, String name){
-	this.vehicleId = vehicleId;
-	this.installDate = installDate;
-	this.scheduledMaintenanceDate = scheduledMaintenanceDate;
-	this.name = name; 
+    public Part(int vehicleId, Date installationDate, Date scheduledMaintenanceDate, String name){
+        this.vehicleId = vehicleId;
+        this.installationDate = installationDate;
+        this.scheduledMaintenanceDate = scheduledMaintenanceDate;
+        this.name = name;
     }
 
     public int getid() {
         return this.id;
     }
 
-    public Date getinstallDate() {
-        return this.installDate;
+    public int getVehicleId(){
+        return this.vehicleId;
+    }
+
+    public Date getinstallationDate() {
+        return this.installationDate;
     }
 
     public Date getScheduledMaintenanceDate() {
