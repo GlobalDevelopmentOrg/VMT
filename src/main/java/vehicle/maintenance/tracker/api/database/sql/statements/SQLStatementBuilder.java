@@ -1,8 +1,16 @@
-package vehicle.maintenance.tracker.database.sql.statements;
+package vehicle.maintenance.tracker.api.database.sql.statements;
 
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * <code>SQLStatementBuilder</code>
+ * A chain-able SQL string builder class.
+ * Mainly intended to help build basic SQL statements needed for the api
+ *
+ * @author Daile Alimo
+ * @since 0.1-SNAPSHOT
+ */
 public class SQLStatementBuilder {
 
     private String command;
@@ -21,6 +29,13 @@ public class SQLStatementBuilder {
 
     public SQLStatementBuilder addArgument(String argument){
         this.argument.add(argument);
+        return this;
+    }
+
+    public SQLStatementBuilder addArguments(String...arguments){
+        for(String arg: arguments){
+            this.argument.add(arg);
+        }
         return this;
     }
 
@@ -51,6 +66,13 @@ public class SQLStatementBuilder {
 
     public SQLStatementBuilder values(){
         return new SQLStatementBuilder(this.build() + " VALUES", true){
+            @Override
+            public SQLStatementBuilder addArguments(String...arguments){
+                for(String arg: arguments){
+                    super.addArgument("'" + arg + "'");
+                }
+                return this;
+            }
             @Override
             public SQLStatementBuilder addArgument(String argument){
                 super.addArgument("'" + argument + "'");

@@ -1,10 +1,17 @@
-package vehicle.maintenance.tracker.database.sql;
+package vehicle.maintenance.tracker.api.database.sql;
 
-import vehicle.maintenance.tracker.database.sql.statements.SQLDataType;
-import vehicle.maintenance.tracker.database.sql.statements.SQLDataTypeBuilder;
-import vehicle.maintenance.tracker.database.sql.statements.SQLStatementBuilder;
-import vehicle.maintenance.tracker.database.sql.statements.SQLStatement;
+import vehicle.maintenance.tracker.api.database.sql.statements.SQLDataType;
+import vehicle.maintenance.tracker.api.database.sql.statements.SQLDataTypeBuilder;
+import vehicle.maintenance.tracker.api.database.sql.statements.SQLStatementBuilder;
+import vehicle.maintenance.tracker.api.database.sql.statements.SQLStatement;
 
+/**
+ * <code>SQLStatementFactory</code>
+ * A factory for building basic SQLStatement and SQLDataType Strings.
+ *
+ * @author Daile Alimo
+ * @since 0.1-SNAPSHOT
+ */
 public class SQLStatementFactory {
 
     public static SQLStatementBuilder statement(SQLStatement statement){

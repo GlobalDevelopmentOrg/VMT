@@ -1,5 +1,14 @@
-package vehicle.maintenance.tracker.database.sql.statements;
+package vehicle.maintenance.tracker.api.database.sql.statements;
 
+/**
+ * Used to build a sql data type declaration string
+ * for use in table creation sql statements.
+ * Using only the needed methods for this api
+ * <code>name INT(10) NOT NULL</code>
+ *
+ * @author Daile Alimo
+ * @since v0.1-SNAPSHOT
+ */
 public class SQLDataTypeBuilder {
 
     private String name;

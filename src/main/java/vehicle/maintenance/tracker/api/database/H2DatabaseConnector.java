@@ -1,4 +1,4 @@
-package vehicle.maintenance.tracker.database;
+package vehicle.maintenance.tracker.api.database;
 
 import java.sql.*;
 
@@ -28,13 +28,16 @@ public class H2DatabaseConnector {
         }
     }
 
-    public Connection openConnection() {
+    public SessionResult openSession(DatabaseConnectorSession session) {
+        SessionResult result = null;
         try {
-            return DriverManager.getConnection("jdbc:h2:" + this.url, this.user, this.password);
+            Connection connection = DriverManager.getConnection("jdbc:h2:" + this.url, this.user, this.password);
+            result = session.use(connection);
+            connection.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return null;
+        return result;
     }
 
 
