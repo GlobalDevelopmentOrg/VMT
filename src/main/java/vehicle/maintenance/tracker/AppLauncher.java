@@ -7,13 +7,13 @@ import javafx.stage.Stage;
         Add yourself to author to all files you edit,update or create.
         Don't forget to comment, keep track of your changes so you can explain
         why you changed them and the problem these changes addressed.
- */
+*/
 
 /**
  * Entry point for this application
  *
- * @Author Daile Alimo
- * @Since 0.1-SNAPSHOT
+ * @author Daile Alimo
+ * @since 0.1-SNAPSHOT
  */
 public class AppLauncher extends Application {
 
