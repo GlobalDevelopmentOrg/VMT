@@ -1,10 +1,5 @@
 package vehicle.maintenance.tracker.api.database.sql;
 
-import vehicle.maintenance.tracker.api.database.sql.statements.SQLDataType;
-import vehicle.maintenance.tracker.api.database.sql.statements.SQLDataTypeBuilder;
-import vehicle.maintenance.tracker.api.database.sql.statements.SQLStatementBuilder;
-import vehicle.maintenance.tracker.api.database.sql.statements.SQLStatement;
-
 /**
  * <code>SQLStatementFactory</code>
  * A factory for building basic SQLStatement and SQLDataType Strings.
@@ -22,6 +17,7 @@ public class SQLStatementFactory {
             case DELETE:
             case INSERT:
             case CREATE:
+            case TRUNCATE:
                 return new SQLStatementBuilder(statement.name());
 
             default:

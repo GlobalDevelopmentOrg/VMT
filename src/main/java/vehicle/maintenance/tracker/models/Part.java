@@ -1,5 +1,7 @@
 package vehicle.maintenance.tracker.models;
 
+import vehicle.maintenance.tracker.api.csv.CsvUtils;
+
 import java.util.Date;
 
 /**
@@ -16,8 +18,8 @@ public class Part {
     private int id;
     private int vehicleId; // id of vehicle this part belongs too
     private Date installationDate;
-    private Date scheduledMaintenanceDate;
     private String name;
+    private int[] scheduledTaskIds;
 
     /*
             We have 2 constructors, the first for loading from the database
@@ -26,19 +28,18 @@ public class Part {
             instantiated. Instead we will update the database with any
             changes made.
      */
-    public Part(int id, int vehicleId, Date installationDate, Date scheduledMaintenanceDate, String name) {
-         this.id = id;
-         this.vehicleId = vehicleId;
-         this.installationDate = installationDate;
-         this.scheduledMaintenanceDate = scheduledMaintenanceDate;
-         this.name = name;
+    public Part(int id, int vehicleId, String name, Date installationDate, String scheduledTaskIdsCVS) {
+        this.id = id;
+        this.vehicleId = vehicleId;
+        this.name = name;
+        this.installationDate = installationDate;
+        this.scheduledTaskIds = CsvUtils.toIntArray(scheduledTaskIdsCVS);
     }
 
-    public Part(int vehicleId, Date installationDate, Date scheduledMaintenanceDate, String name){
+    public Part(int vehicleId, String name, Date installationDate){
         this.vehicleId = vehicleId;
-        this.installationDate = installationDate;
-        this.scheduledMaintenanceDate = scheduledMaintenanceDate;
         this.name = name;
+        this.installationDate = installationDate;
     }
 
     public int getid() {
@@ -53,12 +54,12 @@ public class Part {
         return this.installationDate;
     }
 
-    public Date getScheduledMaintenanceDate() {
-        return this.scheduledMaintenanceDate;
-    }
-
     public String getname() {
         return this.name;
+    }
+
+    public int[] getScheduledTaskIds(){
+        return this.scheduledTaskIds;
     }
 
 }

@@ -1,4 +1,4 @@
-package vehicle.maintenance.tracker.api.database.sql.statements;
+package vehicle.maintenance.tracker.api.database.sql;
 
 /**
  * A enum of SQL data types used in the api

@@ -28,6 +28,7 @@ public class H2DatabaseConnector {
         }
     }
 
+    // by doing this we can make sure the connection gets closed, when we have finished with it.
     public SessionResult openSession(DatabaseConnectorSession session) {
         SessionResult result = null;
         try {

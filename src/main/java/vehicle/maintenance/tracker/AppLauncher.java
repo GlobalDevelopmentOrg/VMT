@@ -7,7 +7,7 @@ import javafx.stage.Stage;
         Add yourself to author to all files you edit,update or create.
         Don't forget to comment, keep track of your changes so you can explain
         why you changed them and the problem these changes addressed.
- */
+*/
 
 /**
  * Entry point for this application

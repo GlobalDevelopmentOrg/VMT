@@ -2,11 +2,11 @@ package vehicle.maintenance.tracker.examples;
 
 import org.h2.tools.DeleteDbFiles;
 import vehicle.maintenance.tracker.api.database.H2DatabaseConnector;
+import vehicle.maintenance.tracker.api.database.sql.SQLStatementBuilder;
 import vehicle.maintenance.tracker.api.database.sql.SQLStatementFactory;
-import vehicle.maintenance.tracker.api.database.sql.statements.SQLDataType;
-import vehicle.maintenance.tracker.api.database.sql.statements.SQLStatement;
+import vehicle.maintenance.tracker.api.database.sql.SQLDataType;
+import vehicle.maintenance.tracker.api.database.sql.SQLStatement;
 
-import java.sql.Connection;
 import java.sql.SQLException;
 
 /**
@@ -75,7 +75,6 @@ public class SQLHelperExample {
             }
             return null;
         });
-
 
         System.out.println("------------------------------------------------------------------------------");
         System.out.println("------------------------------------------------------------------------------");

@@ -1,4 +1,4 @@
-package vehicle.maintenance.tracker.api.database.sql.statements;
+package vehicle.maintenance.tracker.api.database.sql;
 
 /**
  * Used to build a sql data type declaration string
@@ -9,19 +9,19 @@ package vehicle.maintenance.tracker.api.database.sql.statements;
  * @author Daile Alimo
  * @since v0.1-SNAPSHOT
  */
-public class SQLDataTypeBuilder {
+public class SQLDataTypeBuilder implements Buildable{
 
     private String name;
     private String command;
     private int size;
 
-    public SQLDataTypeBuilder(String name, String command, int size){
+    protected SQLDataTypeBuilder(String name, String command, int size){
         this.name = name;
         this.command = command;
         this.size = size;
     }
 
-    public SQLDataTypeBuilder(String command, int size){
+    protected SQLDataTypeBuilder(String command, int size){
         this.name = null;
         this.command = command;
         this.size = size;
@@ -43,6 +43,7 @@ public class SQLDataTypeBuilder {
         return new SQLDataTypeBuilder(this.build() + " PRIMARY_KEY", -1);
     }
 
+    @Override
     public String build(){
         StringBuilder build = new StringBuilder();
         if(this.name != null){

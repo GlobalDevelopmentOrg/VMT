@@ -1,4 +1,4 @@
-package vehicle.maintenance.tracker.api.database.sql.statements;
+package vehicle.maintenance.tracker.api.database.sql;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,18 +11,18 @@ import java.util.List;
  * @author Daile Alimo
  * @since 0.1-SNAPSHOT
  */
-public class SQLStatementBuilder {
+public class SQLStatementBuilder implements Buildable{
 
     private String command;
     private List<String> argument = new ArrayList<String>();
     private boolean parameterizeArguments;
 
-    public SQLStatementBuilder(String command){
+    protected SQLStatementBuilder(String command){
         this.command = command;
         this.parameterizeArguments = false;
     }
 
-    public SQLStatementBuilder(String command, boolean parameterizeArguments){
+    protected SQLStatementBuilder(String command, boolean parameterizeArguments){
         this.command = command;
         this.parameterizeArguments = parameterizeArguments;
     }
@@ -39,8 +39,20 @@ public class SQLStatementBuilder {
         return this;
     }
 
+    public SQLStatementBuilder set(String...assignments){
+        return new SQLStatementBuilder(this.build() + " SET").addArguments(assignments);
+    }
+
+    public SQLStatementBuilder from(String table){
+        return new SQLStatementBuilder(this.build() + " FROM " + table);
+    }
+
     public SQLStatementBuilder where(){
         return new SQLStatementBuilder(this.build() + " WHERE");
+    }
+
+    public SQLStatementBuilder where(String...assignments){
+        return new SQLStatementBuilder(this.build() + " WHERE").addArguments(assignments);
     }
 
     public SQLStatementBuilder ifNotExists(){
@@ -48,7 +60,7 @@ public class SQLStatementBuilder {
     }
 
     public SQLStatementBuilder ifNotExists(String name){
-        return new SQLStatementBuilder(this.build() + " IF NOT EXISTS " + name);
+        return this.ifNotExists().text(name);
 
     }
 
@@ -56,12 +68,21 @@ public class SQLStatementBuilder {
         return new SQLStatementBuilder(this.build() + " INTO");
     }
 
+
+    public SQLStatementBuilder text(String table){
+        return new SQLStatementBuilder(this.build() + " " + table);
+    }
+
     public SQLStatementBuilder table(){
         return new SQLStatementBuilder(this.build() + " TABLE");
     }
 
-    public SQLStatementBuilder table(String table){
-        return new SQLStatementBuilder(this.build() + " " + table);
+    public SQLStatementBuilder table(String name){
+        return this.text(name);
+    }
+
+    public SQLStatementBuilder database(String name){
+        return this.text(name);
     }
 
     public SQLStatementBuilder values(){
@@ -107,6 +128,7 @@ public class SQLStatementBuilder {
         }        return new SQLStatementBuilder(this.build() + " FROM " + table);
     }
 
+    @Override
     public String build(){
         StringBuilder build = new StringBuilder(this.command);
         int paramSize = this.argument.size();

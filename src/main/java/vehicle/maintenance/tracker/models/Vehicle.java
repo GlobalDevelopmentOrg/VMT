@@ -1,6 +1,6 @@
 package vehicle.maintenance.tracker.models;
 
-import java.util.List;
+import vehicle.maintenance.tracker.api.csv.CsvUtils;
 
 /**
  * Vehicle represents a tracked entity within the database 
@@ -28,18 +28,7 @@ public class Vehicle {
         this.id = id;
         this.mileage = mileage;
         this.registration = registration;
-
-        // we get given a csv (comma separated value) string from the database
-        // we have to test and parse that.
-        // due to immutability we can only ever load a vehicles schedule from the database
-        // because of this we will have to refresh the model when a vehicle is updated
-        if(scheduledTaskIdsCSV != null && scheduledTaskIdsCSV.length() > 0 && scheduledTaskIdsCSV.contains(",")){
-            String values[] = scheduledTaskIdsCSV.split(",");
-            this.scheduledTaskIds = new int[values.length];
-            for(int i = 0; i < this.scheduledTaskIds.length; i++){
-                this.scheduledTaskIds[i] = Integer.parseInt(values[i]);
-            }
-        }
+        this.scheduledTaskIds = CsvUtils.toIntArray(scheduledTaskIdsCSV);
     }
 
     public Vehicle(int mileage, String registration){
@@ -59,12 +48,8 @@ public class Vehicle {
         return this.registration;
     }
 
-    public int countScheduledTasks(){
-        return this.scheduledTaskIds != null ? this.scheduledTaskIds.length : 0;
-    }
-
-    public int getScheduledTask(int index){
-        return this.scheduledTaskIds[index];
+    public int[] getScheduledTaskIds(){
+        return this.scheduledTaskIds;
     }
 
 }

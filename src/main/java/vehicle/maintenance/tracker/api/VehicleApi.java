@@ -1,11 +1,12 @@
 package vehicle.maintenance.tracker.api;
 
-import org.h2.tools.Csv;
 import vehicle.maintenance.tracker.api.database.H2DatabaseConnector;
 import vehicle.maintenance.tracker.api.database.SessionResult;
 import vehicle.maintenance.tracker.api.database.sql.SQLStatementFactory;
-import vehicle.maintenance.tracker.api.database.sql.statements.SQLDataType;
-import vehicle.maintenance.tracker.api.database.sql.statements.SQLStatement;
+import vehicle.maintenance.tracker.api.database.sql.SQLAssignment;
+import vehicle.maintenance.tracker.api.database.sql.SQLDataType;
+import vehicle.maintenance.tracker.api.database.sql.SQLStatement;
+import vehicle.maintenance.tracker.api.csv.CsvUtils;
 import vehicle.maintenance.tracker.models.Vehicle;
 
 import java.sql.ResultSet;
@@ -21,8 +22,9 @@ import java.util.List;
 
 /**
  * <code>VehicleAPI</code>
- * Find, Insert, Update, Delete vehicle data in the
- * database
+ * allows you to access methods that will perform CRUD operations
+ * like find, insert, update, delete entries in database as well as
+ * truncate (clear) the entire table.
  *
  * @author Daile Alimo
  * @since 0.1-SNAPSHOT
@@ -41,7 +43,7 @@ public class VehicleApi {
                 Here we create the SQL statement and using a session create
                 the table in the database
          */
-        final String createTable = SQLStatementFactory.statement(SQLStatement.CREATE)
+        final String createTableSQL = SQLStatementFactory.statement(SQLStatement.CREATE)
                 .table()
                 .ifNotExists()
                 .branchAndParameterizeArguments(VehicleApi.VEHICLE_TABLE_NAME)
@@ -62,7 +64,7 @@ public class VehicleApi {
                                 .notNull()
                                 .build(),
                         SQLStatementFactory
-                                .dataType("scheduledTaskIds", SQLDataType.VARCHAR, 1000)
+                                .dataType("scheduledTaskIds", SQLDataType.VARCHAR, 500)
                                 .build()
                 )
                 .build();
@@ -70,7 +72,7 @@ public class VehicleApi {
         // opening the session and creating the table
         this.connector.openSession(connection -> {
             try{
-                connection.createStatement().execute(createTable);
+                connection.createStatement().execute(createTableSQL);
             }catch(SQLException e){
                 e.printStackTrace();
             }
@@ -79,27 +81,25 @@ public class VehicleApi {
     }
 
     public void insert(Vehicle vehicle){
-        int taskSize = vehicle.countScheduledTasks();
-        StringBuilder csv = new StringBuilder();
-        if(taskSize > 0){
-            for(int i = 0; i < taskSize; i++){
-                csv.append(vehicle.getScheduledTask(i));
-                if(i < taskSize - 1){
-                    csv.append(",");
-                }
-            }
-        }
-        final String vehicleSQL = SQLStatementFactory.statement(SQLStatement.INSERT)
+        final String insertSQL = SQLStatementFactory.statement(SQLStatement.INSERT)
                 .into()
                 .branchAndParameterizeArguments(VehicleApi.VEHICLE_TABLE_NAME)
-                .addArguments("registration", "mileage", "scheduledTaskIds")
+                .addArguments(
+                        "registration",
+                        "mileage",
+                        "scheduledTaskIds"
+                )
                 .values()
-                .addArguments(vehicle.getRegistration(), String.valueOf(vehicle.getMileage()), csv.toString())
+                .addArguments(
+                        vehicle.getRegistration(),
+                        String.valueOf(vehicle.getMileage()),
+                        CsvUtils.toCsv(vehicle.getScheduledTaskIds())
+                )
                 .build();
         this.connector.openSession(connection -> {
             try{
                 Statement statement = connection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
-                statement.execute(vehicleSQL);
+                statement.execute(insertSQL);
             }catch(SQLException e){
                 e.printStackTrace();
             }
@@ -109,7 +109,7 @@ public class VehicleApi {
 
     @SuppressWarnings("unchecked")
     public List<Vehicle> findAll(){
-        final String vehicleSQL = SQLStatementFactory.statement(SQLStatement.SELECT)
+        final String findAllSQL = SQLStatementFactory.statement(SQLStatement.SELECT)
                 .allFrom(VehicleApi.VEHICLE_TABLE_NAME)
                 .build();
         /*
@@ -126,7 +126,7 @@ public class VehicleApi {
             List<Vehicle> vehicles = new ArrayList<>();
             try{
                 Statement statement = connection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
-                ResultSet result = statement.executeQuery(vehicleSQL);
+                ResultSet result = statement.executeQuery(findAllSQL);
                 while(result.next()){
                     vehicles.add(new Vehicle(result.getInt("id"), result.getInt("mileage"), result.getString("registration"), result.getString("scheduledTaskIds")));
                 }
@@ -138,15 +138,17 @@ public class VehicleApi {
     }
 
     public Vehicle findById(int id){
-        final String vehicleSQL = SQLStatementFactory.statement(SQLStatement.SELECT)
+        final String findBySQL = SQLStatementFactory.statement(SQLStatement.SELECT)
                 .allFrom(VehicleApi.VEHICLE_TABLE_NAME)
                 .where()
-                .addArgument("id=" + id)
+                .addArgument(
+                        new SQLAssignment("id", id).build()
+                )
                 .build();
         return (Vehicle) this.connector.openSession(connection -> {
             try{
                 Statement statement = connection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
-                ResultSet result = statement.executeQuery(vehicleSQL);
+                ResultSet result = statement.executeQuery(findBySQL);
                 if(result.first()){
                     return new SessionResult<>(
                             new Vehicle(result.getInt("id"), result.getInt("mileage"), result.getString("registration"), result.getString("scheduledTaskIds"))
@@ -164,15 +166,16 @@ public class VehicleApi {
     }
 
     public Vehicle findByRegistration(String registration){
-        final String vehicleSQL = SQLStatementFactory.statement(SQLStatement.SELECT)
+        final String findByRegSQL = SQLStatementFactory.statement(SQLStatement.SELECT)
                 .allFrom(VehicleApi.VEHICLE_TABLE_NAME)
-                .where()
-                .addArgument("registration='" + registration + "'")
+                .where(
+                        new SQLAssignment("registration", registration).build()
+                )
                 .build();
         return (Vehicle) this.connector.openSession(connection -> {
             try{
                 Statement statement = connection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
-                ResultSet result = statement.executeQuery(vehicleSQL);
+                ResultSet result = statement.executeQuery(findByRegSQL);
                 if(result.first()){
                     return new SessionResult<>(
                             new Vehicle(result.getInt("id"), result.getInt("mileage"), result.getString("registration"), result.getString("scheduledTaskIds"))
@@ -187,6 +190,63 @@ public class VehicleApi {
             // this will have to be checked.
             return new SessionResult(null);
         }).getResult();
+    }
+
+    public void update(Vehicle vehicle){
+        final String updateSQL = SQLStatementFactory.statement(SQLStatement.UPDATE)
+                .branch(VehicleApi.VEHICLE_TABLE_NAME)
+                .set(
+                        new SQLAssignment("registration", vehicle.getRegistration()).build(),
+                        new SQLAssignment("mileage", vehicle.getMileage()).build(),
+                        new SQLAssignment("scheduledTaskIds", CsvUtils.toCsv(vehicle.getScheduledTaskIds())).build()
+                )
+                .where(
+                        new SQLAssignment("id", vehicle.getId()).build()
+                )
+                .build();
+        this.connector.openSession(connection -> {
+            try{
+                Statement statement = connection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+                statement.executeUpdate(updateSQL);
+            }catch(SQLException e){
+                e.printStackTrace();
+            }
+            return null;
+        });
+    }
+
+    public void delete(int id){
+        final String deleteSQL = SQLStatementFactory.statement(SQLStatement.DELETE)
+                .from(VehicleApi.VEHICLE_TABLE_NAME)
+                .where(
+                        new SQLAssignment("id", id).build()
+                )
+                .build();
+        this.connector.openSession(connection -> {
+            try{
+                Statement statement = connection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+                statement.executeUpdate(deleteSQL);
+            }catch(SQLException e){
+                e.printStackTrace();
+            }
+            return null;
+        });
+    }
+
+    public void truncate(){
+        final String truncateSQL = SQLStatementFactory.statement(SQLStatement.TRUNCATE)
+                .branch("TABLE")
+                .table(VehicleApi.VEHICLE_TABLE_NAME)
+                .build();
+        this.connector.openSession(connection -> {
+            try{
+                Statement statement = connection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+                statement.executeUpdate(truncateSQL);
+            }catch(SQLException e){
+                e.printStackTrace();
+            }
+            return null;
+        });
     }
 
 }
