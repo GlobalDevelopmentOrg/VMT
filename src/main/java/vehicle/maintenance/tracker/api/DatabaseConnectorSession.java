@@ -1,4 +1,4 @@
-package vehicle.maintenance.tracker.api.database;
+package vehicle.maintenance.tracker.api;
 
 import java.sql.Connection;
 
@@ -9,7 +9,6 @@ import java.sql.Connection;
  * @author Daile ALimo
  * @since 0.1-SNAPSHOT
  */
-@FunctionalInterface
 public interface DatabaseConnectorSession {
 
     SessionResult use(Connection connection);

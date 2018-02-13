@@ -1,4 +1,4 @@
-package vehicle.maintenance.tracker.api.database;
+package vehicle.maintenance.tracker.api;
 
 /**
  * <code>SessionResult</code> holds a castable result object that can
@@ -8,15 +8,15 @@ package vehicle.maintenance.tracker.api.database;
  * @author Daile Alimo
  * @since 0.1-SNAPSHOT
  */
-public class SessionResult <T> {
+public final class SessionResult <T> {
 
-    private T result;
+    private final T result;
 
-    public SessionResult(T result){
+    protected SessionResult(T result){
         this.result = result;
     }
 
-    public T getResult(){
+    protected final T getResult(){
         return this.result;
     }
 

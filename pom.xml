@@ -4,7 +4,7 @@
     <groupId>vehicle.maintenance.tracker</groupId>
     <artifactId>vehicle-maintenance-tracker</artifactId>
     <packaging>jar</packaging>
-    <version>0.1-SNAPSHOT</version>
+    <version>0.2-SNAPSHOT</version>
     <name>track-o-truck</name>
     <url>http://maven.apache.org</url>
 
