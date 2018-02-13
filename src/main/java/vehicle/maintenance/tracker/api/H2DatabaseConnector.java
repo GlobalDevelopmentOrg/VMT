@@ -1,4 +1,4 @@
-package vehicle.maintenance.tracker.api.database;
+package vehicle.maintenance.tracker.api;
 
 import java.sql.*;
 
@@ -9,7 +9,7 @@ import java.sql.*;
  * @author Daile Alimo
  * @since 0.1-SNAPSHOT
  */
-public class H2DatabaseConnector {
+public final class H2DatabaseConnector {
 
     private String url;
     private String user;
@@ -17,25 +17,27 @@ public class H2DatabaseConnector {
 
     public static final String DRIVER = "org.h2.Driver";
 
-    public H2DatabaseConnector(String url, String user, String password) {
+    protected H2DatabaseConnector(String url, String user, String password) {
         this.url = url;
         this.user = user;
         this.password = password;
         try {
             Class.forName(H2DatabaseConnector.DRIVER);
         } catch (Exception e) {
-            e.printStackTrace();
+            System.err.println("unable to instantiate H2DatabaseConnector\n" + H2DatabaseConnector.DRIVER + " not found on class path!\n" + e.getMessage());
+            System.exit(0);
         }
     }
 
     // by doing this we can make sure the connection gets closed, when we have finished with it.
-    public SessionResult openSession(DatabaseConnectorSession session) {
+    protected final SessionResult openSession(DatabaseConnectorSession session) {
         SessionResult result = null;
-        try {
-            Connection connection = DriverManager.getConnection("jdbc:h2:" + this.url, this.user, this.password);
+        try(Connection connection = DriverManager.getConnection("jdbc:h2:" + this.url, this.user, this.password)){
             result = session.use(connection);
+            connection.commit();
             connection.close();
-        } catch (Exception e) {
+        }catch(SQLException e){
+            System.err.println("unable to create connection");
             e.printStackTrace();
         }
         return result;
