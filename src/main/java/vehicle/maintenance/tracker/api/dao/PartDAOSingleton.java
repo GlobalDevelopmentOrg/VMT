@@ -1,5 +1,6 @@
-package vehicle.maintenance.tracker.api;
+package vehicle.maintenance.tracker.api.dao;
 
+import vehicle.maintenance.tracker.api.entity.PartEntity;
 import vehicle.maintenance.tracker.api.exceptions.UnsupportedTableNameException;
 
 import java.sql.PreparedStatement;
@@ -21,13 +22,12 @@ import java.util.List;
 public final class PartDAOSingleton extends DAO<PartEntity> {
 
     private static final String TABLE_NAME = "parts";
-
     private static final String CREATE_TABLE = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME + " (id INT(10) PRIMARY KEY AUTO_INCREMENT, vehicleId INT(10) NOT NULL, name VARCHAR(100) NOT NULL, installationDate VARCHAR(9) NOT NULL)";
-    private static final String INSERT_VEHICLE = "INSERT INTO " + TABLE_NAME + " (vehicleId, name, installationDate) VALUES (?, ?, ?)";
-    private static final String SELECT = "SELECT * FROM " + TABLE_NAME;
-    private static final String SELECT_BY_ID = "SELECT * FROM " + TABLE_NAME + " WHERE id=?";
+    private static final String INSERT_PART = "INSERT INTO " + TABLE_NAME + " (vehicleId, name, installationDate) VALUES (?, ?, ?)";
     private static final String SELECT_BY_VEHICLE_ID = "SELECT * FROM " + TABLE_NAME + " WHERE vehicleId=?";
     private static final String UPDATE = "UPDATE " + TABLE_NAME + " SET vehicleId=?,name=?,installationDate=? WHERE id=?";
+    private static final String SELECT = "SELECT * FROM " + TABLE_NAME;
+    private static final String SELECT_BY_ID = "SELECT * FROM " + TABLE_NAME + " WHERE id=?";
     private static final String GET_LAST_ENTRY = "SELECT * FROM " + TABLE_NAME + " ORDER BY id DESC LIMIT 1";
 
     private static PartDAOSingleton INSTANCE;
@@ -36,7 +36,7 @@ public final class PartDAOSingleton extends DAO<PartEntity> {
         super(TABLE_NAME);
     }
 
-    protected static PartDAOSingleton getInstance(){
+    public static PartDAOSingleton getInstance(){
         if(PartDAOSingleton.INSTANCE == null){
             synchronized (PartDAOSingleton.class){
                 try{
@@ -58,7 +58,7 @@ public final class PartDAOSingleton extends DAO<PartEntity> {
     }
 
     @Override
-    protected final void createTable(){
+    public final void createTable(){
         this.connector.openSession(connection -> {
             try(PreparedStatement statement = connection.prepareStatement(CREATE_TABLE, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE)){
                 statement.execute();
@@ -70,9 +70,9 @@ public final class PartDAOSingleton extends DAO<PartEntity> {
     }
 
     @Override
-    protected final void insert(PartEntity entity) {
+    public final void insert(PartEntity entity) {
         this.connector.openSession(connection -> {
-            try(PreparedStatement statement = connection.prepareStatement(INSERT_VEHICLE, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE)){
+            try(PreparedStatement statement = connection.prepareStatement(INSERT_PART, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE)){
                 statement.setInt(1, entity.getVehicleId());
                 statement.setString(2, entity.getName());
                 statement.setString(3, entity.getInstallationDate());
@@ -85,7 +85,7 @@ public final class PartDAOSingleton extends DAO<PartEntity> {
     }
 
     @Override
-    protected final List<PartEntity> findAll() {
+    public final List<PartEntity> findAll() {
         return (List<PartEntity>) this.connector.openSession(connection -> {
             List<PartEntity> collection = new ArrayList<>();
             try(PreparedStatement statement = connection.prepareStatement(SELECT, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE)){
@@ -106,7 +106,7 @@ public final class PartDAOSingleton extends DAO<PartEntity> {
     }
 
     @Override
-    protected final PartEntity findById(int id) {
+    public final PartEntity findById(int id) {
         return (PartEntity) this.connector.openSession(connection -> {
             PartEntity found = null;
             try(PreparedStatement statement = connection.prepareStatement(SELECT_BY_ID, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE)){
@@ -127,7 +127,7 @@ public final class PartDAOSingleton extends DAO<PartEntity> {
         }).getResult();
     }
 
-    protected final List<PartEntity> findByParentId(int vehicleId){
+    public final List<PartEntity> findByParentId(int vehicleId){
         return (List<PartEntity>) this.connector.openSession(connection -> {
             List<PartEntity> collection = new ArrayList<>();
             try(PreparedStatement statement = connection.prepareStatement(SELECT_BY_VEHICLE_ID, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY)){
@@ -149,7 +149,7 @@ public final class PartDAOSingleton extends DAO<PartEntity> {
     }
 
     @Override
-    protected final void update(PartEntity entity) {
+    public final void update(PartEntity entity) {
         this.connector.openSession(connection -> {
             try(PreparedStatement statement = connection.prepareStatement(UPDATE, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE)){
                 statement.setInt(1, entity.getVehicleId());
@@ -165,7 +165,7 @@ public final class PartDAOSingleton extends DAO<PartEntity> {
     }
 
     @Override
-    protected final PartEntity getLastEntry(){
+    public final PartEntity getLastEntry(){
         return (PartEntity) this.connector.openSession(connection -> {
             PartEntity found = null;
             try(PreparedStatement statement = connection.prepareStatement(GET_LAST_ENTRY, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY)){

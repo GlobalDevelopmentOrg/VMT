@@ -1,4 +1,4 @@
-package vehicle.maintenance.tracker.api;
+package vehicle.maintenance.tracker.api.entity;
 
 /**
  * PartEntity represents a detachable piece of machinery
@@ -9,28 +9,24 @@ package vehicle.maintenance.tracker.api;
  * @author Daile Alimo
  * @since 0.1-SNAPSHOT
  */
-public final class PartEntity {
+public final class PartEntity extends Entity {
 
-    private int id;
     private int vehicleId;
     private String installationDate;
     private String name;
 
     public PartEntity(int id, int vehicleId, String name, String installationDate) {
-        this.id = id;
+        super(id);
         this.vehicleId = vehicleId;
         this.name = name;
         this.installationDate = installationDate;
     }
 
     public PartEntity(int vehicleId, String name, String installationDate){
+        super();
         this.vehicleId = vehicleId;
         this.name = name;
         this.installationDate = installationDate;
-    }
-
-    public final int getId() {
-        return this.id;
     }
 
     public final int getVehicleId(){
@@ -58,12 +54,12 @@ public final class PartEntity {
     }
 
     public final String getIdForTasks(){
-        return "part_" + this.id;
+        return "part_" + super.getId();
     }
 
     @Override
     public final String toString(){
-        return this.getId() + " " + this.getVehicleId() + " " + this.getName() + " " + this.getInstallationDate() + " " + this.getIdForTasks() + "\n";
+        return "Part :name installed on :date".replace(":name", this.getName()).replace(":date", this.getInstallationDate());
     }
 
 }

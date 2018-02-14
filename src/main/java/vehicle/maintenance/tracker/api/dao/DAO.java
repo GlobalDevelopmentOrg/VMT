@@ -1,4 +1,4 @@
-package vehicle.maintenance.tracker.api;
+package vehicle.maintenance.tracker.api.dao;
 
 import vehicle.maintenance.tracker.api.exceptions.UnsupportedTableNameException;
 
@@ -20,6 +20,7 @@ import java.util.List;
 public abstract class DAO<E> {
 
     H2DatabaseConnector connector;
+
     private static final String DATABASE = "database";
     private static final String USER = "admin@root_user";
     private static final String PASSWORD = "pass@root_user/admin";
@@ -28,8 +29,7 @@ public abstract class DAO<E> {
     private String TRUNCATE;
     private String COUNT;
     private String EXISTS;
-    private String COLUMN_SELECT;
-    private String COLUMN_SELECT_LIMITED;
+
 
     DAO(String tableName) throws UnsupportedTableNameException {
         /*
@@ -47,8 +47,6 @@ public abstract class DAO<E> {
         this.TRUNCATE = "TRUNCATE TABLE :tableName".replace(":tableName", tableName);
         this.COUNT = "SELECT COUNT(1) FROM :tableName".replace(":tableName", tableName);
         this.EXISTS = "SELECT id FROM :tableName WHERE id=?".replace(":tableName", tableName);
-        this.COLUMN_SELECT = "SELECT ? FROM :tableName".replace(":tableName", tableName);
-        this.COLUMN_SELECT_LIMITED = "SELECT ? FROM :tableName LIMIT ? OFFSET ?".replace(":tableName", tableName);
         this.createTable();
     }
 
@@ -59,7 +57,7 @@ public abstract class DAO<E> {
     protected abstract void update(E entity);
     protected abstract E getLastEntry();
 
-    protected final void delete(int id) {
+    public final void delete(int id) {
         this.connector.openSession(connection -> {
             try(PreparedStatement statement = connection.prepareStatement(DELETE, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE)){
                 statement.setInt(1, id);
@@ -71,7 +69,7 @@ public abstract class DAO<E> {
         });
     }
 
-    protected final void truncate() {
+    public final void truncate() {
         this.connector.openSession(connection -> {
             try(PreparedStatement statement = connection.prepareStatement(TRUNCATE, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE)){
                 statement.execute();
@@ -82,7 +80,7 @@ public abstract class DAO<E> {
         });
     }
 
-    protected final int count(){
+    public final int count(){
         return (Integer) this.connector.openSession(connection -> {
             int result = 0;
             try(PreparedStatement statement = connection.prepareStatement(COUNT, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE)){
@@ -97,7 +95,7 @@ public abstract class DAO<E> {
         }).getResult();
     }
 
-    protected final boolean exists(){
+    public final boolean exists(){
         return (Boolean) this.connector.openSession(connection -> {
             int result = 0;
             try(PreparedStatement statement = connection.prepareStatement(EXISTS, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE)){

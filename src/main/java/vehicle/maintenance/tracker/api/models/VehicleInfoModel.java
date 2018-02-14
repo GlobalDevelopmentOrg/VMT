@@ -1,7 +1,7 @@
 package vehicle.maintenance.tracker.api.models;
 
-import vehicle.maintenance.tracker.api.TaskEntity;
-import vehicle.maintenance.tracker.api.VehicleEntity;
+import vehicle.maintenance.tracker.api.entity.TaskEntity;
+import vehicle.maintenance.tracker.api.entity.VehicleEntity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,19 +34,21 @@ public class VehicleInfoModel {
         this.taskEntities = taskEntities;
     }
 
-    public void addTaskEntity(String comment, String deadlineDate){
-        this.taskEntities.add(new TaskEntity(this.vehicleEntity.getIdForTasks(), comment, deadlineDate));
+    public void addTaskEntity(String name, String comment, String deadlineDate){
+        this.taskEntities.add(new TaskEntity(this.vehicleEntity.getIdForTasks(), name, comment, deadlineDate));
     }
 
     @Override
     public String toString(){
         StringBuilder builder = new StringBuilder();
         builder.append(this.getVehicleEntity().toString());
-        builder.append("----Tasks for vehicle----\n");
-        this.getTaskEntities().forEach(builder::append);
-        builder.append("----Parts for vehicle----\n");
-        this.getPartInfoModels().forEach(builder::append);
-        builder.append("----END OF VEHICLE INFO MODEL----\n\n\n");
+        this.getTaskEntities().forEach(task -> {
+            builder.append("\n--> " + task);
+            builder.append("\n" + task.getComment() + "\n");
+        });
+        this.getPartInfoModels().forEach(part -> {
+            builder.append("\n" + part);
+        });
         return builder.toString();
     }
 
