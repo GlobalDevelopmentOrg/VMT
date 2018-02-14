@@ -1,7 +1,7 @@
 package vehicle.maintenance.tracker.api.models;
 
-import vehicle.maintenance.tracker.api.PartEntity;
-import vehicle.maintenance.tracker.api.TaskEntity;
+import vehicle.maintenance.tracker.api.entity.PartEntity;
+import vehicle.maintenance.tracker.api.entity.TaskEntity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,17 +35,18 @@ public class PartInfoModel {
         this.taskEntities = taskEntities;
     }
 
-    public void addTaskEntity(String comment, String deadlineDate){
-        this.taskEntities.add(new TaskEntity(this.partEntity.getIdForTasks(), comment, deadlineDate));
+    public void addTaskEntity(String name, String comment, String deadlineDate){
+        this.taskEntities.add(new TaskEntity(this.partEntity.getIdForTasks(), name, comment, deadlineDate));
     }
 
     @Override
     public String toString(){
         StringBuilder builder = new StringBuilder();
-        builder.append(this.partEntity.toString());
-        builder.append("----Tasks for part----\n");
-        this.getTaskEntities().forEach(builder::append);
-        builder.append("----END OF PART INFO MODEL----\n");
+        builder.append("---> " + this.partEntity.toString());
+        this.getTaskEntities().forEach(task -> {
+            builder.append("\n------> " + task);
+            builder.append("\n" + task.getComment() + "\n");
+        });
         return builder.toString();
     }
 

@@ -1,4 +1,4 @@
-package vehicle.maintenance.tracker.api;
+package vehicle.maintenance.tracker.api.dao;
 
 /**
  * <code>SessionResult</code> holds a castable result object that can

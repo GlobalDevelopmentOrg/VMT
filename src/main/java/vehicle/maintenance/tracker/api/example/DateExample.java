@@ -1,6 +1,6 @@
-package vehicle.maintenance.tracker.api;
+package vehicle.maintenance.tracker.api.example;
 
-import vehicle.maintenance.tracker.api.DateUtil;
+import vehicle.maintenance.tracker.api.utils.DateUtil;
 
 import java.text.ParseException;
 import java.util.Date;

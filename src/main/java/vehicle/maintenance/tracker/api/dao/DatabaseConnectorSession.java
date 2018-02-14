@@ -1,4 +1,4 @@
-package vehicle.maintenance.tracker.api;
+package vehicle.maintenance.tracker.api.dao;
 
 import java.sql.Connection;
 
