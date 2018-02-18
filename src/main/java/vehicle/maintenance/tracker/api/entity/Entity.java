@@ -1,22 +1,32 @@
 package vehicle.maintenance.tracker.api.entity;
 
+import java.util.UUID;
+
 public class Entity {
 
-    private int id;
+    private String id;
+    private String name;
 
-    public Entity(){
-        this.id = -1;
+    public Entity(String name){
+        this.name = name;
+        this.id = UUID.randomUUID().toString();
     }
 
-    public Entity(int id){
+    public Entity(String id, String name){
         this.id = id;
+        this.name = name;
     }
 
-    public boolean hasIdentity(){
-        return this.id > 0;
-    }
-
-    public int getId() {
+    public String getId() {
         return id;
     }
+
+    public String getName(){
+        return this.name;
+    }
+
+    public void setName(String name){
+        this.name = name;
+    }
+
 }

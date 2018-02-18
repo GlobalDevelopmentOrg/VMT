@@ -11,29 +11,26 @@ package vehicle.maintenance.tracker.api.entity;
  */
 public final class PartEntity extends Entity {
 
-    private int vehicleId;
+    private String vehicleId;
     private String installationDate;
-    private String name;
 
-    public PartEntity(int id, int vehicleId, String name, String installationDate) {
-        super(id);
+    public PartEntity(String vehicleId, String name, String installationDate){
+        super(name);
         this.vehicleId = vehicleId;
-        this.name = name;
         this.installationDate = installationDate;
     }
 
-    public PartEntity(int vehicleId, String name, String installationDate){
-        super();
+    public PartEntity(String id, String vehicleId, String name, String installationDate){
+        super(id, name);
         this.vehicleId = vehicleId;
-        this.name = name;
         this.installationDate = installationDate;
     }
 
-    public final int getVehicleId(){
+    public final String getVehicleId(){
         return this.vehicleId;
     }
 
-    public final void setVehicleId(int vehicleId){
+    public final void setVehicleId(String vehicleId){
         this.vehicleId = vehicleId;
     }
 
@@ -45,21 +42,11 @@ public final class PartEntity extends Entity {
         this.installationDate = installationDate;
     }
 
-    public final String getName() {
-        return this.name;
-    }
-
-    public final void setName(String name){
-        this.name = name;
-    }
-
-    public final String getIdForTasks(){
-        return "part_" + super.getId();
-    }
-
     @Override
     public final String toString(){
-        return "Part :name installed on :date".replace(":name", this.getName()).replace(":date", this.getInstallationDate());
+        return "Part :name installed on :date"
+                .replace(":name", super.getName())
+                .replace(":date", this.getInstallationDate());
     }
 
 }
