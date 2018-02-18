@@ -19,7 +19,7 @@ public class AppLauncher extends Application {
 
     // think of stage and the main app window
     public void start(Stage stage) {
-
+            // TODO
     }
 
     public static void main(String[] args) {
