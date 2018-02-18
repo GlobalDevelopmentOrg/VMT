@@ -11,19 +11,16 @@ package vehicle.maintenance.tracker.api.entity;
 public final class VehicleEntity extends Entity {
 
     private int mileage;
-    private String name;
     private String registration;
 
-    public VehicleEntity(int id, String name, int mileage, String registration){
-        super(id);
-        this.name = name;
+    public VehicleEntity(String name, String registration, int mileage){
+        super(name);
         this.mileage = mileage;
         this.registration = registration;
     }
 
-    public VehicleEntity(int mileage, String name, String registration){
-        super();
-        this.name = name;
+    public VehicleEntity(String id, String name, String registration, int mileage){
+        super(id, name);
         this.mileage = mileage;
         this.registration = registration;
     }
@@ -36,14 +33,6 @@ public final class VehicleEntity extends Entity {
         this.mileage = mileage;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public String getRegistration() {
         return registration;
     }
@@ -52,15 +41,11 @@ public final class VehicleEntity extends Entity {
         this.registration = registration;
     }
 
-    public final String getIdForTasks(){
-        return "vehicle_" + super.getId();
-    }
-
     @Override
     public final String toString(){
         return "Vehicle[:id] :name[:registration] for :mileage miles"
                 .replace(":id", String.valueOf(this.getId()))
-                .replace(":name", this.getName())
+                .replace(":name", super.getName())
                 .replace(":registration", this.getRegistration())
                 .replace(":mileage", String.valueOf(this.getMileage()));
     }

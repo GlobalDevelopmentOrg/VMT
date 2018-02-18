@@ -1,7 +1,9 @@
 package vehicle.maintenance.tracker.api.models;
 
+import javafx.concurrent.Task;
 import vehicle.maintenance.tracker.api.entity.PartEntity;
 import vehicle.maintenance.tracker.api.entity.TaskEntity;
+import vehicle.maintenance.tracker.api.exceptions.InvalidDateException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,9 +20,9 @@ public class PartInfoModel {
     private PartEntity partEntity;
     private List<TaskEntity> taskEntities;
 
-    public PartInfoModel(PartEntity partEntity){
+    public PartInfoModel(PartEntity partEntity, List<TaskEntity> taskEntities){
         this.partEntity = partEntity;
-        this.taskEntities = new ArrayList<>();
+        this.taskEntities = taskEntities;
     }
 
     public PartEntity getPartEntity() {
@@ -35,17 +37,16 @@ public class PartInfoModel {
         this.taskEntities = taskEntities;
     }
 
-    public void addTaskEntity(String name, String comment, String deadlineDate){
-        this.taskEntities.add(new TaskEntity(this.partEntity.getIdForTasks(), name, comment, deadlineDate));
+    public void addTaskEntity(String name, String comment, String dueDate) throws InvalidDateException {
+        this.taskEntities.add(new TaskEntity(this.partEntity.getId(), name, comment, dueDate));
     }
 
     @Override
     public String toString(){
         StringBuilder builder = new StringBuilder();
-        builder.append("---> " + this.partEntity.toString());
+        builder.append(this.partEntity.toString() + " [" + this.partEntity.getId() + "] " + " [" + this.partEntity.getVehicleId() + "]");
         this.getTaskEntities().forEach(task -> {
-            builder.append("\n------> " + task);
-            builder.append("\n" + task.getComment() + "\n");
+            builder.append("\n------> " + task + " [" + task.getId() + "]" + " [" + task.getParentId() + "]");
         });
         return builder.toString();
     }

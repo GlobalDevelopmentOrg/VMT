@@ -1,6 +1,7 @@
-package vehicle.maintenance.tracker.api.dao;
+package vehicle.maintenance.tracker.api.storage;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 
 /**
  * This interface should be passed to a connector openSession
@@ -11,6 +12,6 @@ import java.sql.Connection;
  */
 public interface DatabaseConnectorSession {
 
-    SessionResult use(Connection connection);
+    SessionResult use(Connection connection) throws SQLException;
 
 }

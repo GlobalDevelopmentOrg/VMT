@@ -1,4 +1,4 @@
-package vehicle.maintenance.tracker.api.example;
+package vehicle.maintenance.tracker.examples;
 
 import vehicle.maintenance.tracker.api.utils.DateUtil;
 

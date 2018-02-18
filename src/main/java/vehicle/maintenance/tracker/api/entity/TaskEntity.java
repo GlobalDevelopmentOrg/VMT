@@ -1,26 +1,35 @@
 package vehicle.maintenance.tracker.api.entity;
 
+/*
+ *    We may be mixing concerns here by managing and validating the dueDate string
+ *    passed into this class.
+ *    Maybe a better approach would be to have a separate class to do this when this
+ *    class is to be used in the api.
+ *
+ */
+/**
+ *
+ * @author Daile Alimo
+ * @since 0.2-SNAPSHOT
+ */
 public final class TaskEntity extends Entity {
 
     private String parentId;
-    private String name;
     private String comment;
-    private String deadLineDate;
+    private String dueDate;
 
-    public TaskEntity(int id, String parentId, String name, String comment, String deadLineDate){
-        super(id);
+    public TaskEntity(String parentId, String name, String comment, String dueDate) {
+        super(name);
         this.parentId = parentId;
-        this.name = name;
         this.comment = comment;
-        this.deadLineDate = deadLineDate;
+        this.dueDate = dueDate;
     }
 
-    public TaskEntity(String parentId, String name, String comment, String deadLineDate){
-        super();
+    public TaskEntity(String id, String parentId, String name, String comment, String dueDate) {
+        super(id, name);
         this.parentId = parentId;
-        this.name = name;
         this.comment = comment;
-        this.deadLineDate = deadLineDate;
+        this.dueDate = dueDate;
     }
 
     public String getParentId(){
@@ -31,14 +40,6 @@ public final class TaskEntity extends Entity {
         this.parentId = parentId;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public String getComment() {
         return comment;
     }
@@ -47,17 +48,19 @@ public final class TaskEntity extends Entity {
         this.comment = comment;
     }
 
-    public String getDeadLineDate() {
-        return deadLineDate;
+    public String getDueDate() {
+        return this.dueDate;
     }
 
-    public void setDeadLineDate(String deadLineDate) {
-        this.deadLineDate = deadLineDate;
+    public void setDueDate(String dueDate) {
+        this.dueDate = dueDate;
     }
 
     @Override
     public final String toString(){
-        return "Task ':name' scheduled for :deadline".replace(":name", this.getName()).replace(":deadline", this.getDeadLineDate());
+        return "Task ':name' scheduled for :dueDate"
+                .replace(":name", super.getName())
+                .replace(":dueDate", this.getDueDate());
     }
 
 }
