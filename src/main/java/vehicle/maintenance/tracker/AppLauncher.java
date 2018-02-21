@@ -1,7 +1,11 @@
 package vehicle.maintenance.tracker;
 
 import javafx.application.Application;
+import javafx.scene.Scene;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import vehicle.maintenance.tracker.api.exceptions.InvalidDateException;
+import vehicle.maintenance.tracker.gui.DateComponent;
 
 /*
         Add yourself to author to all files you edit,update or create.
@@ -19,7 +23,15 @@ public class AppLauncher extends Application {
 
     // think of stage and the main app window
     public void start(Stage stage) {
-            // TODO
+        VBox layout = null;
+        try {
+            layout = new VBox(new DateComponent("28/12/91"));
+        } catch (InvalidDateException e) {
+            e.printStackTrace();
+        }
+
+        stage.setScene(new Scene(layout));
+        stage.show();
     }
 
     public static void main(String[] args) {

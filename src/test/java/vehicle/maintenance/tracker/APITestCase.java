@@ -10,24 +10,38 @@ public class APITestCase {
     @Test
     public void testAPI(){
         VMTApi api = new VMTApi();
+        VehicleEntity loadedInstance;
         VehicleEntity vehicleEntity = new VehicleEntity("unnamed", "01KF39FJ3", 59122);
 
-        // both insert and update!
-        api.update(vehicleEntity, update -> {
-            update.setName("Toyota");
-        });
+        // change unnamed vehicle entity name to Toyota
+        vehicleEntity.setName("Toyota");
 
+        // commit changes
+        api.commitVehicle(vehicleEntity);
+
+        // assert changes made
         Assert.assertEquals("Toyota", vehicleEntity.getName());
         Assert.assertEquals("01KF39FJ3", vehicleEntity.getRegistration());
         Assert.assertEquals(59122, vehicleEntity.getMileage());
 
-        // update mileage
-        api.update(vehicleEntity, update -> {
-            update.setMileage(59999);
-        });
+        // assert saved
+        loadedInstance = api.getVehicle(vehicleEntity.getId());
+        Assert.assertEquals(vehicleEntity.getName(), loadedInstance.getName());
+        Assert.assertEquals(vehicleEntity.getRegistration(), loadedInstance.getRegistration());
+        Assert.assertEquals(vehicleEntity.getMileage(), loadedInstance.getMileage());
+
+        // change mileage
+        vehicleEntity.setMileage(59999);
+
+        // commit changes
+        api.commitVehicle(vehicleEntity);
 
         // assert updated
         Assert.assertEquals(59999, vehicleEntity.getMileage());
+
+        // assert updated
+        loadedInstance = api.getVehicle(vehicleEntity.getId());
+        Assert.assertEquals(vehicleEntity.getMileage(), loadedInstance.getMileage());
 
         // clean up
         api.deleteVehicle(vehicleEntity);
