@@ -9,9 +9,6 @@ import vehicle.maintenance.tracker.api.entity.TaskEntity;
 import vehicle.maintenance.tracker.api.entity.VehicleEntity;
 import vehicle.maintenance.tracker.api.exceptions.APIInitException;
 import vehicle.maintenance.tracker.api.exceptions.DAOInitException;
-import vehicle.maintenance.tracker.api.session.PartEntityUpdateSession;
-import vehicle.maintenance.tracker.api.session.TaskEntityUpdateSession;
-import vehicle.maintenance.tracker.api.session.VehicleEntityUpdateSession;
 
 import java.util.List;
 
@@ -64,13 +61,6 @@ public final class VMTApi {
         return this;
     }
 
-    // update vehicle
-    public VMTApi update(VehicleEntity changedEntity, VehicleEntityUpdateSession session){
-        session.update(changedEntity);
-        this.commitVehicle(changedEntity);
-        return this;
-    }
-
     // get parts
     public List<PartEntity> getAllParts(){
         return VMTApi.partDAOSingleton.findAll();
@@ -99,13 +89,6 @@ public final class VMTApi {
         return this;
     }
 
-    // update part
-    public VMTApi update(PartEntity changedEntity, PartEntityUpdateSession session){
-        session.update(changedEntity);
-        this.commitPart(changedEntity);
-        return this;
-    }
-
     // get task for parentId(vehicle or part)
     public List<TaskEntity> getAllTasks(){
         return VMTApi.taskDAOSingleton.findAll();
@@ -131,13 +114,6 @@ public final class VMTApi {
         }else{
             VMTApi.taskDAOSingleton.update(entity);
         }
-        return this;
-    }
-
-    // update task
-    public VMTApi update(TaskEntity changedEntity, TaskEntityUpdateSession session){
-        session.update(changedEntity);
-        this.commitTask(changedEntity);
         return this;
     }
 
