@@ -23,15 +23,15 @@ import java.util.List;
 @SuppressWarnings("unused")
 public final class VMTApi {
 
-    private static VehicleDAOSingleton vehicleDAOSingleton;
-    private static PartDAOSingleton partDAOSingleton;
-    private static TaskDAOSingleton taskDAOSingleton;
+    private static VehicleDAOSingleton vehicleDAO;
+    private static PartDAOSingleton partDAOS;
+    private static TaskDAOSingleton taskDAO;
 
     public VMTApi() throws APIInitException {
         try {
-            VMTApi.vehicleDAOSingleton = VehicleDAOSingleton.getInstance();
-            VMTApi.partDAOSingleton = PartDAOSingleton.getInstance();
-            VMTApi.taskDAOSingleton = TaskDAOSingleton.getInstance();
+            VMTApi.vehicleDAO = VehicleDAOSingleton.getInstance();
+            VMTApi.partDAOS = PartDAOSingleton.getInstance();
+            VMTApi.taskDAO = TaskDAOSingleton.getInstance();
         } catch (DAOInitException e) {
             throw new APIInitException(e);
         }
@@ -39,94 +39,105 @@ public final class VMTApi {
 
     // get vehicle
     public List<VehicleEntity> getAllVehicles(){
-        return VMTApi.vehicleDAOSingleton.findAll();
+        return VMTApi.vehicleDAO.findAll();
     }
 
     public VehicleEntity getVehicle(String id){
-        return VMTApi.vehicleDAOSingleton.findById(id);
+        return VMTApi.vehicleDAO.findById(id);
     }
 
     public VMTApi deleteVehicle(VehicleEntity entity){
-        VMTApi.vehicleDAOSingleton.delete(entity);
+        VMTApi.vehicleDAO.delete(entity);
         return this;
     }
 
     // add vehicle
     public VMTApi commitVehicle(VehicleEntity entity) {
-        if(!VMTApi.vehicleDAOSingleton.exists(entity)){
-            VMTApi.vehicleDAOSingleton.insert(entity);
+        if(!VMTApi.vehicleDAO.exists(entity)){
+            VMTApi.vehicleDAO.insert(entity);
         }else{
-            VMTApi.vehicleDAOSingleton.update(entity);
+            VMTApi.vehicleDAO.update(entity);
         }
         return this;
     }
 
     // get parts
     public List<PartEntity> getAllParts(){
-        return VMTApi.partDAOSingleton.findAll();
+        return VMTApi.partDAOS.findAll();
     }
 
     public List<PartEntity> getParts(String vehicleId){
-        return VMTApi.partDAOSingleton.findByParentId(vehicleId);
+        return VMTApi.partDAOS.findByParentId(vehicleId);
     }
 
     public PartEntity getPart(String id){
-        return VMTApi.partDAOSingleton.findById(id);
+        return VMTApi.partDAOS.findById(id);
     }
 
     public VMTApi deletePart(PartEntity entity){
-        VMTApi.partDAOSingleton.delete(entity);
+        VMTApi.partDAOS.delete(entity);
         return this;
     }
 
     // add part
     public VMTApi commitPart(PartEntity entity) {
-        if(!VMTApi.partDAOSingleton.exists(entity)){
-            VMTApi.partDAOSingleton.insert(entity);
+        if(!VMTApi.partDAOS.exists(entity)){
+            VMTApi.partDAOS.insert(entity);
         }else{
-            VMTApi.partDAOSingleton.update(entity);
+            VMTApi.partDAOS.update(entity);
         }
         return this;
     }
 
     // get task for parentId(vehicle or part)
     public List<TaskEntity> getAllTasks(){
-        return VMTApi.taskDAOSingleton.findAll();
+        return VMTApi.taskDAO.findAll();
     }
 
     public List<TaskEntity> getTasks(Entity entity){
-        return VMTApi.taskDAOSingleton.findByParentId(entity.getId());
+        return VMTApi.taskDAO.findByParentId(entity.getId());
     }
 
     public List<TaskEntity> getTasks(String parentId){
-        return VMTApi.taskDAOSingleton.findByParentId(parentId);
+        return VMTApi.taskDAO.findByParentId(parentId);
     }
 
     public TaskEntity getTask(String id){
-        return VMTApi.taskDAOSingleton.findById(id);
+        return VMTApi.taskDAO.findById(id);
     }
 
     public VMTApi deleteTask(TaskEntity entity){
-        VMTApi.taskDAOSingleton.delete(entity);
+        VMTApi.taskDAO.delete(entity);
         return this;
     }
 
     // add task
     public VMTApi commitTask(TaskEntity entity) {
-        if(!VMTApi.taskDAOSingleton.exists(entity)){
-            VMTApi.taskDAOSingleton.insert(entity);
+        if(!VMTApi.taskDAO.exists(entity)){
+            VMTApi.taskDAO.insert(entity);
         }else{
-            VMTApi.taskDAOSingleton.update(entity);
+            VMTApi.taskDAO.update(entity);
         }
         return this;
     }
 
     public final VMTApi clearAll() {
-        VMTApi.vehicleDAOSingleton.truncate();
-        VMTApi.partDAOSingleton.truncate();
-        VMTApi.taskDAOSingleton.truncate();
+        VMTApi.vehicleDAO.truncate();
+        VMTApi.partDAOS.truncate();
+        VMTApi.taskDAO.truncate();
         return this;
     }
 
+    public int countVehicles(){
+        return VMTApi.vehicleDAO.count();
+    }
+
+    public int countParts(){
+        return VMTApi.partDAOS.count();
+    }
+
+    public int countTasks(){
+        return VMTApi.taskDAO.count();
+    }
 
 }
