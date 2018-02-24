@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.SeparatorMenuItem?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<VBox prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="vehicle.maintenance.tracker.controller.ApplicationController">
+  <children>
+    <MenuBar VBox.vgrow="NEVER">
+      <menus>
+        <Menu mnemonicParsing="false" text="File">
+          <items>
+            <MenuItem mnemonicParsing="false" text="New" />
+            <MenuItem mnemonicParsing="false" text="Open…" />
+            <Menu mnemonicParsing="false" text="Open Recent" />
+            <SeparatorMenuItem mnemonicParsing="false" />
+            <MenuItem mnemonicParsing="false" text="Close" />
+            <MenuItem mnemonicParsing="false" text="Save" />
+            <MenuItem mnemonicParsing="false" text="Save As…" />
+            <MenuItem mnemonicParsing="false" text="Revert" />
+            <SeparatorMenuItem mnemonicParsing="false" />
+            <MenuItem mnemonicParsing="false" text="Preferences…" />
+            <SeparatorMenuItem mnemonicParsing="false" />
+            <MenuItem mnemonicParsing="false" text="Quit" />
+          </items>
+        </Menu>
+        <Menu mnemonicParsing="false" text="Edit">
+          <items>
+            <MenuItem mnemonicParsing="false" text="Undo" />
+            <MenuItem mnemonicParsing="false" text="Redo" />
+            <SeparatorMenuItem mnemonicParsing="false" />
+            <MenuItem mnemonicParsing="false" text="Cut" />
+            <MenuItem mnemonicParsing="false" text="Copy" />
+            <MenuItem mnemonicParsing="false" text="Paste" />
+            <MenuItem mnemonicParsing="false" text="Delete" />
+            <SeparatorMenuItem mnemonicParsing="false" />
+            <MenuItem mnemonicParsing="false" text="Select All" />
+            <MenuItem mnemonicParsing="false" text="Unselect All" />
+          </items>
+        </Menu>
+        <Menu mnemonicParsing="false" text="Help">
+          <items>
+            <MenuItem mnemonicParsing="false" text="About MyHelloApp" />
+          </items>
+        </Menu>
+      </menus>
+    </MenuBar>
+    <SplitPane dividerPositions="0.22828507795100222" focusTraversable="true" nodeOrientation="LEFT_TO_RIGHT" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
+         <items>
+            <ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="573.0" prefWidth="200.0">
+               <content>
+                  <ListView fx:id="vehicleList" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" />
+               </content>
+            </ScrollPane>
+            <SplitPane dividerPositions="0.2513089005235602" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0">
+               <items>
+                  <VBox fx:id="vehicleHeader" nodeOrientation="LEFT_TO_RIGHT" prefHeight="111.0" prefWidth="692.0">
+                     <children>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Vehicle Name" textAlignment="CENTER" wrappingWidth="647.13671875" VBox.vgrow="NEVER">
+                           <font>
+                              <Font name="System Bold" size="27.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </VBox.margin>
+                        </Text>
+                        <HBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="200.0">
+                           <children>
+                              <TextField alignment="TOP_CENTER" prefHeight="25.0" prefWidth="71.0" text="99" />
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Miles" textAlignment="CENTER" wrappingWidth="56.13671875">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Text>
+                           </children>
+                        </HBox>
+                     </children>
+                     <padding>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </padding>
+                  </VBox>
+                  <SplitPane dividerPositions="0.45375722543352603" prefHeight="160.0" prefWidth="200.0">
+                    <items>
+                        <ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="426.0" prefWidth="343.0">
+                           <content>
+                              <ListView fx:id="partList" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" />
+                           </content>
+                        </ScrollPane>
+                        <SplitPane dividerPositions="0.4507042253521127, 0.5" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0">
+                          <items>
+                              <ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="426.0" prefWidth="343.0">
+                                 <content>
+                                    <ListView fx:id="taskList" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="86.0" prefWidth="375.0" />
+                                 </content>
+                              </ScrollPane>
+                              <Text strokeWidth="0.0" text="Notes">
+                                 <font>
+                                    <Font size="19.0" />
+                                 </font>
+                              </Text>
+                              <ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="319.0" prefWidth="375.0">
+                                 <content>
+                                    <TextArea fx:id="notes" prefHeight="212.0" prefWidth="375.0" />
+                                 </content>
+                              </ScrollPane>
+                          </items>
+                        </SplitPane>
+                    </items>
+                  </SplitPane>
+               </items>
+            </SplitPane>
+         </items>
+    </SplitPane>
+      <VBox fx:id="details" VBox.vgrow="ALWAYS">
+         <children>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Details" wrappingWidth="865.13671875">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Text>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="None" wrappingWidth="867.0">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Text>
+         </children>
+         <VBox.margin>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </VBox.margin>
+         <padding>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </padding>
+      </VBox>
+  </children>
+</VBox>

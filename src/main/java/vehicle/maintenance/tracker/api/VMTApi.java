@@ -98,6 +98,10 @@ public final class VMTApi {
         return VMTApi.taskDAOSingleton.findByParentId(entity.getId());
     }
 
+    public List<TaskEntity> getTasks(String parentId){
+        return VMTApi.taskDAOSingleton.findByParentId(parentId);
+    }
+
     public TaskEntity getTask(String id){
         return VMTApi.taskDAOSingleton.findById(id);
     }
