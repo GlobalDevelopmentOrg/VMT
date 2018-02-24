@@ -22,7 +22,7 @@ import java.util.List;
 public final class TaskDAOSingleton extends DAO<TaskEntity> {
 
     private static final String TABLE_NAME = "tasks";
-    private static final String CREATE_TABLE = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME + " (id VARCHAR(36) PRIMARY KEY, parentId VARCHAR(101), name VARCHAR(50) NOT NULL, comment VARCHAR(1000), dueDate VARCHAR(9) NOT NULL, UNIQUE(id))";
+    private static final String CREATE_TABLE = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME + " (id VARCHAR(36) PRIMARY KEY, parentId VARCHAR(36), name VARCHAR(50) NOT NULL, comment VARCHAR(1000), dueDate VARCHAR(9) NOT NULL, UNIQUE(id))";
     private static final String INSERT_TASK = "INSERT INTO " + TABLE_NAME + " (id, parentId, name, comment, dueDate) VALUES (?, ?, ?, ?, ?)";
     private static final String SELECT_BY_PARENT_ID = "SELECT * FROM " + TABLE_NAME + " WHERE parentId=?";
     private static final String UPDATE = "UPDATE " + TABLE_NAME + " SET parentId=?,name=?,comment=?,dueDate=? WHERE id=?";

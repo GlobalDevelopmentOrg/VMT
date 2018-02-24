@@ -24,7 +24,7 @@ import java.util.List;
 public final class PartDAOSingleton extends DAO<PartEntity> {
 
     private static final String TABLE_NAME = "parts";
-    private static final String CREATE_TABLE = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME + " (id VARCHAR(36) PRIMARY KEY, vehicleId INT(10) NOT NULL, name VARCHAR(100) NOT NULL, installationDate VARCHAR(9) NOT NULL, UNIQUE(id))";
+    private static final String CREATE_TABLE = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME + " (id VARCHAR(36) PRIMARY KEY, vehicleId VARCHAR(36) NOT NULL, name VARCHAR(100) NOT NULL, installationDate VARCHAR(9) NOT NULL, UNIQUE(id))";
     private static final String INSERT_PART = "INSERT INTO " + TABLE_NAME + " (id, vehicleId, name, installationDate) VALUES (?, ?, ?, ?)";
     private static final String SELECT_BY_VEHICLE_ID = "SELECT * FROM " + TABLE_NAME + " WHERE vehicleId=?";
     private static final String UPDATE = "UPDATE " + TABLE_NAME + " SET vehicleId=?,name=?,installationDate=? WHERE id=?";
