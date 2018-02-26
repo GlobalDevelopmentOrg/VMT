@@ -1,11 +1,5 @@
 package vehicle.maintenance.tracker.api.entity;
 
-/*
- *    We may be mixing concerns here by managing and validating the dueDate string
- *    passed into this class.
- *    Maybe a better approach would be to have a separate class to do this when this
- *    class is to be used in the api.
- */
 /**
  * @author Daile Alimo
  * @since 0.2-SNAPSHOT
