@@ -1,9 +1,10 @@
-package vehicle.maintenance.tracker.api.storage;
+package vehicle.maintenance.tracker.replaced.storage;
 
+import vehicle.maintenance.tracker.api.dao.SessionResult;
 import vehicle.maintenance.tracker.api.entity.VehicleEntity;
-import vehicle.maintenance.tracker.api.exceptions.DAOInitException;
-import vehicle.maintenance.tracker.api.exceptions.StorageCommunicationException;
-import vehicle.maintenance.tracker.api.exceptions.TableInitException;
+import vehicle.maintenance.tracker.replaced.exceptions.DAOInitException;
+import vehicle.maintenance.tracker.replaced.exceptions.StorageCommunicationException;
+import vehicle.maintenance.tracker.replaced.exceptions.TableInitException;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -24,9 +25,9 @@ import java.util.List;
 public final class VehicleDAOSingleton extends DAO<VehicleEntity> {
 
     private static final String TABLE_NAME = "vehicles";
-    private static final String CREATE_TABLE = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME + " (id VARCHAR(36) PRIMARY KEY, name VARCHAR(50) NOT NULL, registration VARCHAR(255) NOT NULL, mileage INT(10) NOT NULL, UNIQUE(id))";
-    private static final String INSERT_VEHICLE = "INSERT INTO " + TABLE_NAME + " (id, name, registration, mileage) VALUES (?, ?, ?, ?)";
-    private static final String UPDATE = "UPDATE " + TABLE_NAME + " SET name=?,registration=?,mileage=? WHERE id=?";
+    private static final String CREATE_TABLE = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME + " (id VARCHAR(36) PRIMARY KEY, name VARCHAR(50) NOT NULL, notes VARCHAR(500), registration VARCHAR(255) NOT NULL, mileage INT(10) NOT NULL, UNIQUE(id))";
+    private static final String INSERT_VEHICLE = "INSERT INTO " + TABLE_NAME + " (id, name, notes, registration, mileage) VALUES (?, ?, ?, ?, ?)";
+    private static final String UPDATE = "UPDATE " + TABLE_NAME + " SET name=?,notes=?,registration=?,mileage=? WHERE id=?";
     private static final String SELECT = "SELECT * FROM " + TABLE_NAME;
     private static final String SELECT_BY_ID = "SELECT * FROM " + TABLE_NAME + " WHERE id=?";
 
@@ -72,8 +73,9 @@ public final class VehicleDAOSingleton extends DAO<VehicleEntity> {
                 PreparedStatement statement = connection.prepareStatement(INSERT_VEHICLE, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
                 statement.setString(1, entity.getId());
                 statement.setString(2, entity.getName());
-                statement.setString(3, entity.getRegistration());
-                statement.setInt(4, entity.getMileage());
+                statement.setString(3, entity.getNotes());
+                statement.setString(4, entity.getRegistration());
+                statement.setInt(5, entity.getMileage());
                 statement.execute();
                 return null;
             });
@@ -93,6 +95,7 @@ public final class VehicleDAOSingleton extends DAO<VehicleEntity> {
                     collection.add(new VehicleEntity(
                             set.getString("id"),
                             set.getString("name"),
+                            set.getString("notes"),
                             set.getString("registration"),
                             set.getInt("mileage")
                     ));
@@ -116,6 +119,7 @@ public final class VehicleDAOSingleton extends DAO<VehicleEntity> {
                     found = new VehicleEntity(
                             set.getString("id"),
                             set.getString("name"),
+                            set.getString("notes"),
                             set.getString("registration"),
                             set.getInt("mileage")
                     );
@@ -133,9 +137,10 @@ public final class VehicleDAOSingleton extends DAO<VehicleEntity> {
             this.connector.openSession(connection -> {
                 PreparedStatement statement = connection.prepareStatement(UPDATE, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
                 statement.setString(1, entity.getName());
-                statement.setString(2, entity.getRegistration());
-                statement.setInt(3, entity.getMileage());
-                statement.setString(4, entity.getId());
+                statement.setString(2, entity.getNotes());
+                statement.setString(3, entity.getRegistration());
+                statement.setInt(4, entity.getMileage());
+                statement.setString(5, entity.getId());
                 statement.executeUpdate();
                 return null;
             });

@@ -1,6 +1,6 @@
 package vehicle.maintenance.tracker.examples;
 
-import vehicle.maintenance.tracker.api.VMTApi;
+import vehicle.maintenance.tracker.replaced.VMTApi;
 import vehicle.maintenance.tracker.api.entity.TaskEntity;
 import vehicle.maintenance.tracker.api.entity.VehicleEntity;
 
@@ -9,7 +9,7 @@ public class VMTApiExample {
     public static void main(String[] args){
         VMTApi api = new VMTApi();
 
-        VehicleEntity vehicleEntity = new VehicleEntity("Toyota", "FOE30DM310", 500);
+        VehicleEntity vehicleEntity = new VehicleEntity("Toyota", "", "FOE30DM310", 500);
         TaskEntity taskEntity1 = new TaskEntity(vehicleEntity.getId(), "Task 1", "Comments", "22/12/01");
         TaskEntity taskEntity2 = new TaskEntity(vehicleEntity.getId(), "Task 2", "Comments", "22/12/01");
 

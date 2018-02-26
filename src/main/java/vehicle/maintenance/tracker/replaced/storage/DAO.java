@@ -1,9 +1,10 @@
-package vehicle.maintenance.tracker.api.storage;
+package vehicle.maintenance.tracker.replaced.storage;
 
+import vehicle.maintenance.tracker.api.dao.SessionResult;
 import vehicle.maintenance.tracker.api.entity.Entity;
-import vehicle.maintenance.tracker.api.exceptions.DAOInitException;
-import vehicle.maintenance.tracker.api.exceptions.StorageCommunicationException;
-import vehicle.maintenance.tracker.api.exceptions.TableInitException;
+import vehicle.maintenance.tracker.replaced.exceptions.DAOInitException;
+import vehicle.maintenance.tracker.replaced.exceptions.StorageCommunicationException;
+import vehicle.maintenance.tracker.replaced.exceptions.TableInitException;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

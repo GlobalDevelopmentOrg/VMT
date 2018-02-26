@@ -5,6 +5,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import vehicle.maintenance.tracker.api.dao.HibernateDAO;
+import vehicle.maintenance.tracker.api.utils.HibernateUtil;
 
 import java.io.IOException;
 import java.net.URL;
@@ -26,6 +28,10 @@ public class Launcher extends Application {
             stage.setScene(scene);
             stage.sizeToScene();
             stage.show();
+            stage.onCloseRequestProperty().set(e -> {
+                // currently we need to close the hibernate session ourselves!
+                HibernateUtil.close();
+            });
         }else{
             System.err.println("unable to start application");
         }

@@ -2,19 +2,19 @@ package vehicle.maintenance.tracker;
 
 import org.junit.Assert;
 import org.junit.Test;
-import vehicle.maintenance.tracker.api.storage.PartDAOSingleton;
-import vehicle.maintenance.tracker.api.storage.TaskDAOSingleton;
-import vehicle.maintenance.tracker.api.storage.VehicleDAOSingleton;
+import vehicle.maintenance.tracker.replaced.storage.PartDAOSingleton;
+import vehicle.maintenance.tracker.replaced.storage.TaskDAOSingleton;
+import vehicle.maintenance.tracker.replaced.storage.VehicleDAOSingleton;
 import vehicle.maintenance.tracker.api.entity.PartEntity;
 import vehicle.maintenance.tracker.api.entity.TaskEntity;
 import vehicle.maintenance.tracker.api.entity.VehicleEntity;
-import vehicle.maintenance.tracker.api.exceptions.DAOInitException;
+import vehicle.maintenance.tracker.replaced.exceptions.DAOInitException;
 
 public class DAOTestCase {
 
     @Test
     public void testVehicleDAO(){
-        VehicleEntity entity = new VehicleEntity("Toyota", "01GI50RJ1", 537);
+        VehicleEntity entity = new VehicleEntity("Toyota", "", "01GI50RJ1", 537);
         VehicleDAOSingleton vehicleDAOSingleton = null;
         try{
             vehicleDAOSingleton = VehicleDAOSingleton.getInstance();
@@ -39,7 +39,7 @@ public class DAOTestCase {
 
     @Test
     public void testPartDAO(){
-        PartEntity entity = new PartEntity("", "Wheel", "22/12/91");
+        PartEntity entity = new PartEntity("", "", "Wheel", "22/12/91");
         PartDAOSingleton partDAOSingleton = null;
         try{
             partDAOSingleton = PartDAOSingleton.getInstance();

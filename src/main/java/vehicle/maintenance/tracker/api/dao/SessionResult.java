@@ -1,4 +1,4 @@
-package vehicle.maintenance.tracker.api.storage;
+package vehicle.maintenance.tracker.api.dao;
 
 /**
  * <code>SessionResult</code> holds a castable result object that can
@@ -12,11 +12,10 @@ public final class SessionResult <T> {
 
     private final T result;
 
-    protected SessionResult(T result){
+    public SessionResult(T result){
         this.result = result;
     }
-
-    protected final T getResult(){
+    public final T getResult(){
         return this.result;
     }
 

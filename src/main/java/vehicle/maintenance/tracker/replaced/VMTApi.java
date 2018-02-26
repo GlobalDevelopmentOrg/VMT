@@ -1,14 +1,14 @@
-package vehicle.maintenance.tracker.api;
+package vehicle.maintenance.tracker.replaced;
 
-import vehicle.maintenance.tracker.api.storage.PartDAOSingleton;
-import vehicle.maintenance.tracker.api.storage.TaskDAOSingleton;
-import vehicle.maintenance.tracker.api.storage.VehicleDAOSingleton;
+import vehicle.maintenance.tracker.replaced.storage.PartDAOSingleton;
+import vehicle.maintenance.tracker.replaced.storage.TaskDAOSingleton;
+import vehicle.maintenance.tracker.replaced.storage.VehicleDAOSingleton;
 import vehicle.maintenance.tracker.api.entity.Entity;
 import vehicle.maintenance.tracker.api.entity.PartEntity;
 import vehicle.maintenance.tracker.api.entity.TaskEntity;
 import vehicle.maintenance.tracker.api.entity.VehicleEntity;
-import vehicle.maintenance.tracker.api.exceptions.APIInitException;
-import vehicle.maintenance.tracker.api.exceptions.DAOInitException;
+import vehicle.maintenance.tracker.replaced.exceptions.APIInitException;
+import vehicle.maintenance.tracker.replaced.exceptions.DAOInitException;
 
 import java.util.List;
 

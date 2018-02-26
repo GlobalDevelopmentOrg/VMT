@@ -2,7 +2,7 @@ package vehicle.maintenance.tracker;
 
 import org.junit.Assert;
 import org.junit.Test;
-import vehicle.maintenance.tracker.api.VMTApi;
+import vehicle.maintenance.tracker.replaced.VMTApi;
 import vehicle.maintenance.tracker.api.entity.VehicleEntity;
 
 public class APITestCase {
@@ -11,7 +11,7 @@ public class APITestCase {
     public void testAPI(){
         VMTApi api = new VMTApi();
         VehicleEntity loadedInstance;
-        VehicleEntity vehicleEntity = new VehicleEntity("unnamed", "01KF39FJ3", 59122);
+        VehicleEntity vehicleEntity = new VehicleEntity("unnamed", "", "01KF39FJ3", 59122);
 
         // change unnamed vehicle entity name to Toyota
         vehicleEntity.setName("Toyota");

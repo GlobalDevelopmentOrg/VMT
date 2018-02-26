@@ -1,13 +1,13 @@
 package vehicle.maintenance.tracker.api.utils;
 
-import vehicle.maintenance.tracker.api.VMTApi;
+import vehicle.maintenance.tracker.replaced.VMTApi;
 import vehicle.maintenance.tracker.api.entity.PartEntity;
 import vehicle.maintenance.tracker.api.entity.TaskEntity;
 import vehicle.maintenance.tracker.api.entity.VehicleEntity;
 
 import java.util.Random;
 
-public class MockData {
+public class VMTMockDataGenerator {
 
     private VMTApi api;
     private static final Random random = new Random();
@@ -31,7 +31,7 @@ public class MockData {
             "Checked and working", "Waiting for engineer", "Must check", "Waiting for parts", "Scheduled"
     };
 
-    public MockData(VMTApi api){
+    public VMTMockDataGenerator(VMTApi api){
         this.api = api;
     }
 
@@ -39,9 +39,9 @@ public class MockData {
         System.out.println("**Start generation of mock data**");
         for(int i = 0; i < vehicles; i++){
             System.out.println("generating vehicle " + i);
-            VehicleEntity vehicleEntity = new VehicleEntity(this.getRandomName(), this.getRandomReg(), this.getRandomMileage());
+            VehicleEntity vehicleEntity = new VehicleEntity(this.getRandomName(), "", this.getRandomReg(), this.getRandomMileage());
             for(int p = 0; p < 1 + random.nextInt(parts); p++){
-                PartEntity partEntity = new PartEntity(vehicleEntity.getId(), this.getRandomPart(), this.getRandomDate());
+                PartEntity partEntity = new PartEntity(vehicleEntity.getId(), "", this.getRandomPart(), this.getRandomDate());
                 for(int pt = 0; pt < 1 + random.nextInt(partTasks); pt++){
                     TaskEntity partTask = new TaskEntity(partEntity.getId(), "Part Task " + pt, this.getRandomComment(), this.getRandomDate());
                     this.api.commitTask(partTask);

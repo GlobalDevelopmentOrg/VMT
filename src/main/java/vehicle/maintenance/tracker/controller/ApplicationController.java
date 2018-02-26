@@ -10,16 +10,17 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
-import vehicle.maintenance.tracker.api.VMTApi;
+import vehicle.maintenance.tracker.api.dao.HibernateDAO;
+import vehicle.maintenance.tracker.api.utils.HibernateMockDataGenerator;
 import vehicle.maintenance.tracker.api.entity.PartEntity;
 import vehicle.maintenance.tracker.api.entity.TaskEntity;
 import vehicle.maintenance.tracker.api.entity.VehicleEntity;
-import vehicle.maintenance.tracker.api.utils.MockData;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
+@SuppressWarnings("unchecked")
 public class ApplicationController implements Initializable {
 
     @FXML
@@ -39,19 +40,34 @@ public class ApplicationController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        VMTApi api = new VMTApi();
+        HibernateDAO dao = new HibernateDAO();
 
         // generate 100 new vehicles (slow)
-        // new MockData(api).add(100, 5, 5, 5);
+        new HibernateMockDataGenerator(dao).add(100, 5, 5, 5);
 
-        details.setText("Vehicles: " + api.countVehicles() + "\nParts: " + api.countParts() + "\nTasks: " + api.countTasks());
-
-        ObservableList<VehicleInfoCell> vehicles = FXCollections.observableList(
-                api.getAllVehicles().stream().map(v -> new VehicleInfoCell(v)).collect(Collectors.toList())
+        details.setText(
+                "Vehicles: " + dao.count(VehicleEntity.class)
+                + "\nParts: " + dao.count(PartEntity.class)
+                + "\nTasks: " + dao.count(TaskEntity.class)
         );
 
-        vehicleList.setItems(vehicles);
+        // Get all vehicles from api and add them to the vehicle list
+        //
+        vehicleList.setItems(FXCollections.observableList(
+                dao.getAll(VehicleEntity.class)
+                        .stream()
+                        .map(vehicle -> new VehicleInfoCell((VehicleEntity) vehicle))
+                        .collect(Collectors.toList())
+        ));
 
+        // On click of vehicle list item
+        //
+        // get selected item and check for null
+        // get the entity for the specific item
+        // update header, mileage, details
+        // load parts for vehicle
+        // load tasks for vehicle
+        // TODO implement comments for vehicle ?
         vehicleList.onMouseClickedProperty().set(ve -> {
             VehicleInfoCell selectedVehicleInfo = (VehicleInfoCell) vehicleList.getSelectionModel().getSelectedItem();
             if(selectedVehicleInfo != null){
@@ -64,50 +80,74 @@ public class ApplicationController implements Initializable {
                         + "\nMileage: " + selectedVehicle.getMileage());
 
                 ObservableList<PartInfoCell> parts = FXCollections.observableList(
-                        api.getParts(vehicleId).stream().map(p -> new PartInfoCell(p)).collect(Collectors.toList())
+                        dao.getAssociatedWith(PartEntity.class, "vehicleId", vehicleId)
+                                .stream()
+                                .map(part -> new PartInfoCell((PartEntity) part))
+                                .collect(Collectors.toList())
                 );
                 ObservableList<TaskInfoCell> vehicleTasks = FXCollections.observableList(
-                        api.getTasks(vehicleId).stream().map(p -> new TaskInfoCell(p)).collect(Collectors.toList())
+                        dao.getAssociatedWith(TaskEntity.class,"parentId", vehicleId)
+                                .stream()
+                                .map(task -> new TaskInfoCell((TaskEntity) task))
+                                .collect(Collectors.toList())
                 );
 
                 partList.setItems(parts);
-                partList.onMouseClickedProperty().set(pe -> {
-                    PartInfoCell selectedPartInfo = (PartInfoCell) partList.getSelectionModel().getSelectedItem();
-                    if(selectedPartInfo != null){
-                        PartEntity selectedPart = selectedPartInfo.getEntity();
-                        details.setText("Name: " + selectedPart.getName()
-                        + "\nInstallation-Date: " + selectedPart.getInstallationDate());
-
-                        String partId = selectedPartInfo.getEntity().getId();
-                        ObservableList<TaskInfoCell> partTasks = FXCollections.observableList(
-                                api.getTasks(partId).stream().map(p -> new TaskInfoCell(p)).collect(Collectors.toList())
-                        );
-                        taskList.setItems(partTasks);
-                    }
-                    notes.clear();
-                    notes.setDisable(true);
-                });
-
                 taskList.setItems(vehicleTasks);
-                taskList.onMouseClickedProperty().set(te -> {
-                    TaskInfoCell selected = (TaskInfoCell) taskList.getSelectionModel().getSelectedItem();
-                    if(selected != null){
-                        TaskEntity task = selected.getEntity();
-                        details.setText("Due: " + task.getDueDate());
-                        notes.setText(task.getComment());
-                        notes.setDisable(false);
-                    }
-                });
                 notes.clear();
                 notes.setDisable(true);
             }
         });
 
+        // on click of part list item
+        //
+        // get selected item and check for null
+        // get the entity for the specific item
+        // update details
+        // load tasks for part
+        // clear and disable notes as they are not implemented
+        // TODO implement comments for parts ?
+        partList.onMouseClickedProperty().set(pe -> {
+            PartInfoCell selectedPartInfo = (PartInfoCell) partList.getSelectionModel().getSelectedItem();
+            if(selectedPartInfo != null){
+                PartEntity selectedPart = selectedPartInfo.getEntity();
+                details.setText("Name: " + selectedPart.getName()
+                        + "\nInstallation-Date: " + selectedPart.getInstallationDate());
+
+                String partId = selectedPartInfo.getEntity().getId();
+                ObservableList<TaskInfoCell> partTasks = FXCollections.observableList(
+                        dao.getAssociatedWith(TaskEntity.class, "parentId", partId)
+                                .stream()
+                                .map(task -> new TaskInfoCell((TaskEntity) task))
+                                .collect(Collectors.toList())
+                );
+                taskList.setItems(partTasks);
+            }
+            notes.clear();
+            notes.setDisable(true);
+        });
+
+        // on click of task list item
+        //
+        // get selected item and check for null
+        // get the entity for the specific item
+        // update details
+        // set notes for task
+        // enable notes (input editable)
+        taskList.onMouseClickedProperty().set(te -> {
+            TaskInfoCell selected = (TaskInfoCell) taskList.getSelectionModel().getSelectedItem();
+            if(selected != null){
+                TaskEntity task = selected.getEntity();
+                details.setText("Due: " + task.getDueDate());
+                notes.setText(task.getNotes());
+                notes.setDisable(false);
+            }
+        });
     }
 
     private class VehicleInfoCell extends EntityInfoCell<VehicleEntity> {
 
-        public VehicleInfoCell(VehicleEntity entity){
+        VehicleInfoCell(VehicleEntity entity){
             super(entity);
             this.getChildren().addAll(
                     new Text(entity.getName()),
@@ -119,7 +159,7 @@ public class ApplicationController implements Initializable {
 
     private class PartInfoCell extends EntityInfoCell<PartEntity> {
 
-        public PartInfoCell(PartEntity entity){
+        PartInfoCell(PartEntity entity){
             super(entity);
             this.getChildren().addAll(
                     new Text(entity.getName()),
@@ -132,7 +172,7 @@ public class ApplicationController implements Initializable {
 
     private class TaskInfoCell extends EntityInfoCell<TaskEntity> {
 
-        public TaskInfoCell(TaskEntity entity){
+        TaskInfoCell(TaskEntity entity){
             super(entity);
             this.getChildren().addAll(
                     new Text(entity.getName()),
@@ -146,11 +186,11 @@ public class ApplicationController implements Initializable {
 
         private E entity;
 
-        public EntityInfoCell(E entity){
+        EntityInfoCell(E entity){
             this.entity = entity;
         }
 
-        public E getEntity(){
+        E getEntity(){
             return this.entity;
         }
 

@@ -1,0 +1,9 @@
+<hibernate-mapping package="vehicle.maintenance.tracker.api.entity">
+    <class name="TaskEntity" table="tasks">
+        <id name="id" column="id"/>
+        <property name="name"/>
+        <property name="notes"/>
+        <property name="parentId"/>
+        <property name="dueDate"/>
+    </class>
+</hibernate-mapping>

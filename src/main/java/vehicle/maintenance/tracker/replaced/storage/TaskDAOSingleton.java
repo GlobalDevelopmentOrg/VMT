@@ -1,7 +1,8 @@
-package vehicle.maintenance.tracker.api.storage;
+package vehicle.maintenance.tracker.replaced.storage;
 
+import vehicle.maintenance.tracker.api.dao.SessionResult;
 import vehicle.maintenance.tracker.api.entity.TaskEntity;
-import vehicle.maintenance.tracker.api.exceptions.*;
+import vehicle.maintenance.tracker.replaced.exceptions.*;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -22,10 +23,10 @@ import java.util.List;
 public final class TaskDAOSingleton extends DAO<TaskEntity> {
 
     private static final String TABLE_NAME = "tasks";
-    private static final String CREATE_TABLE = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME + " (id VARCHAR(36) PRIMARY KEY, parentId VARCHAR(36), name VARCHAR(50) NOT NULL, comment VARCHAR(1000), dueDate VARCHAR(9) NOT NULL, UNIQUE(id))";
-    private static final String INSERT_TASK = "INSERT INTO " + TABLE_NAME + " (id, parentId, name, comment, dueDate) VALUES (?, ?, ?, ?, ?)";
+    private static final String CREATE_TABLE = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME + " (id VARCHAR(36) PRIMARY KEY, parentId VARCHAR(36), name VARCHAR(50) NOT NULL, notes VARCHAR(1000), dueDate VARCHAR(9) NOT NULL, UNIQUE(id))";
+    private static final String INSERT_TASK = "INSERT INTO " + TABLE_NAME + " (id, parentId, name, notes, dueDate) VALUES (?, ?, ?, ?, ?)";
     private static final String SELECT_BY_PARENT_ID = "SELECT * FROM " + TABLE_NAME + " WHERE parentId=?";
-    private static final String UPDATE = "UPDATE " + TABLE_NAME + " SET parentId=?,name=?,comment=?,dueDate=? WHERE id=?";
+    private static final String UPDATE = "UPDATE " + TABLE_NAME + " SET parentId=?,name=?,notes=?,dueDate=? WHERE id=?";
     private static final String DELETE = "DELETE FROM " + TABLE_NAME + " WHERE parentId=?";
     private static final String SELECT = "SELECT * FROM " + TABLE_NAME;
     private static final String SELECT_BY_ID = "SELECT * FROM " + TABLE_NAME + " WHERE id=?";
@@ -73,7 +74,7 @@ public final class TaskDAOSingleton extends DAO<TaskEntity> {
                 statement.setString(1, entity.getId());
                 statement.setString(2, entity.getParentId());
                 statement.setString(3, entity.getName());
-                statement.setString(4, entity.getComment());
+                statement.setString(4, entity.getNotes());
                 statement.setString(5, entity.getDueDate());
                 statement.execute();
                 return null;
@@ -95,7 +96,7 @@ public final class TaskDAOSingleton extends DAO<TaskEntity> {
                             set.getString("id"),
                             set.getString("parentId"),
                             set.getString("name"),
-                            set.getString("comment"),
+                            set.getString("notes"),
                             set.getString("dueDate")
                     ));
                 }
@@ -119,7 +120,7 @@ public final class TaskDAOSingleton extends DAO<TaskEntity> {
                             set.getString("id"),
                             set.getString("parentId"),
                             set.getString("name"),
-                            set.getString("comment"),
+                            set.getString("notes"),
                             set.getString("dueDate")
                     );
                 }
@@ -142,7 +143,7 @@ public final class TaskDAOSingleton extends DAO<TaskEntity> {
                             set.getString("id"),
                             set.getString("parentId"),
                             set.getString("name"),
-                            set.getString("comment"),
+                            set.getString("notes"),
                             set.getString("dueDate")
                     ));
                 }
@@ -161,7 +162,7 @@ public final class TaskDAOSingleton extends DAO<TaskEntity> {
                 PreparedStatement statement = connection.prepareStatement(UPDATE, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
                 statement.setString(1, entity.getParentId());
                 statement.setString(2, entity.getName());
-                statement.setString(3, entity.getComment());
+                statement.setString(3, entity.getNotes());
                 statement.setString(4, entity.getDueDate());
                 statement.setString(5, entity.getId());
                 statement.executeUpdate();

@@ -1,4 +1,4 @@
-package vehicle.maintenance.tracker.api.exceptions;
+package vehicle.maintenance.tracker.replaced.exceptions;
 
 @SuppressWarnings("unused")
 public class DAOInitException extends Exception {
