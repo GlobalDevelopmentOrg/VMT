@@ -1,27 +1,27 @@
 package vehicle.maintenance.tracker.api.entity;
 
 /**
- *
  * @author Daile Alimo
  * @since 0.2-SNAPSHOT
  */
 public final class TaskEntity extends Entity {
 
     private String parentId;
-    private String comment;
     private String dueDate;
 
-    public TaskEntity(String parentId, String name, String comment, String dueDate) {
-        super(name);
+    public TaskEntity(){
+        super();
+    }
+
+    public TaskEntity(String parentId, String name, String notes, String dueDate) {
+        super(name, notes);
         this.parentId = parentId;
-        this.comment = comment;
         this.dueDate = dueDate;
     }
 
-    public TaskEntity(String id, String parentId, String name, String comment, String dueDate) {
-        super(id, name);
+    public TaskEntity(String id, String parentId, String name, String notes, String dueDate) {
+        super(id, name, notes);
         this.parentId = parentId;
-        this.comment = comment;
         this.dueDate = dueDate;
     }
 
@@ -31,14 +31,6 @@ public final class TaskEntity extends Entity {
 
     public void setParentId(String parentId){
         this.parentId = parentId;
-    }
-
-    public String getComment() {
-        return comment;
-    }
-
-    public void setComment(String comment) {
-        this.comment = comment;
     }
 
     public String getDueDate() {

@@ -1,4 +1,6 @@
-package vehicle.maintenance.tracker.api.storage;
+package vehicle.maintenance.tracker.replaced.storage;
+
+import vehicle.maintenance.tracker.api.dao.SessionResult;
 
 import java.sql.*;
 

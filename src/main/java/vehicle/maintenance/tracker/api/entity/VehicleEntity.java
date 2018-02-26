@@ -13,14 +13,18 @@ public final class VehicleEntity extends Entity {
     private int mileage;
     private String registration;
 
-    public VehicleEntity(String name, String registration, int mileage){
-        super(name);
+    public VehicleEntity(){
+        super();
+    }
+
+    public VehicleEntity(String name, String notes, String registration, int mileage){
+        super(name, notes);
         this.mileage = mileage;
         this.registration = registration;
     }
 
-    public VehicleEntity(String id, String name, String registration, int mileage){
-        super(id, name);
+    public VehicleEntity(String id, String name, String notes, String registration, int mileage){
+        super(id, name, notes);
         this.mileage = mileage;
         this.registration = registration;
     }

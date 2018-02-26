@@ -14,14 +14,18 @@ public final class PartEntity extends Entity {
     private String vehicleId;
     private String installationDate;
 
-    public PartEntity(String vehicleId, String name, String installationDate){
-        super(name);
+    public PartEntity(){
+        super();
+    }
+
+    public PartEntity(String vehicleId, String name, String notes, String installationDate){
+        super(name, notes);
         this.vehicleId = vehicleId;
         this.installationDate = installationDate;
     }
 
-    public PartEntity(String id, String vehicleId, String name, String installationDate){
-        super(id, name);
+    public PartEntity(String id, String vehicleId, String name, String notes, String installationDate){
+        super(id, name, notes);
         this.vehicleId = vehicleId;
         this.installationDate = installationDate;
     }

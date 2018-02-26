@@ -10,12 +10,14 @@
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<VBox prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="vehicle.maintenance.tracker.controller.ApplicationController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="vehicle.maintenance.tracker.controller.ApplicationController">
   <children>
     <MenuBar VBox.vgrow="NEVER">
       <menus>
@@ -60,14 +62,17 @@
          <items>
             <ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="573.0" prefWidth="200.0">
                <content>
-                  <ListView fx:id="vehicleList" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" />
+                  <ListView fx:id="vehicleList" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
+                     <effect>
+                        <DropShadow height="0.0" radius="0.0" width="0.0" />
+                     </effect></ListView>
                </content>
             </ScrollPane>
-            <SplitPane dividerPositions="0.2513089005235602" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0">
+            <SplitPane dividerPositions="0.2891089108910891" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0">
                <items>
-                  <VBox fx:id="vehicleHeader" nodeOrientation="LEFT_TO_RIGHT" prefHeight="111.0" prefWidth="692.0">
+                  <VBox alignment="TOP_CENTER" nodeOrientation="LEFT_TO_RIGHT">
                      <children>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Vehicle Name" textAlignment="CENTER" wrappingWidth="647.13671875" VBox.vgrow="NEVER">
+                        <Text fx:id="header" fill="#ababab" strokeType="OUTSIDE" strokeWidth="0.0" text="Vehicle Name" textAlignment="CENTER" textOrigin="CENTER" wrappingWidth="657.13671875" VBox.vgrow="NEVER">
                            <font>
                               <Font name="System Bold" size="27.0" />
                            </font>
@@ -77,10 +82,10 @@
                         </Text>
                         <HBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="200.0">
                            <children>
-                              <TextField alignment="TOP_CENTER" prefHeight="25.0" prefWidth="71.0" text="99" />
+                              <TextField fx:id="mileage" alignment="TOP_CENTER" prefHeight="25.0" prefWidth="71.0" text="99" />
                               <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Miles" textAlignment="CENTER" wrappingWidth="56.13671875">
                                  <font>
-                                    <Font name="System Bold" size="14.0" />
+                                    <Font name="System Bold" size="18.0" />
                                  </font>
                               </Text>
                            </children>
@@ -97,23 +102,22 @@
                               <ListView fx:id="partList" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" />
                            </content>
                         </ScrollPane>
-                        <SplitPane dividerPositions="0.4507042253521127, 0.5" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0">
+                        <SplitPane dividerPositions="0.4507042253521127" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0">
                           <items>
-                              <ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="426.0" prefWidth="343.0">
+                              <ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="93.0" prefWidth="375.0">
                                  <content>
-                                    <ListView fx:id="taskList" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="86.0" prefWidth="375.0" />
+                                    <ListView fx:id="taskList" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" />
                                  </content>
                               </ScrollPane>
-                              <Text strokeWidth="0.0" text="Notes">
-                                 <font>
-                                    <Font size="19.0" />
-                                 </font>
-                              </Text>
-                              <ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="319.0" prefWidth="375.0">
+                              <TitledPane text="Notes">
                                  <content>
-                                    <TextArea fx:id="notes" prefHeight="212.0" prefWidth="375.0" />
+                                    <ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="217.0" prefWidth="375.0">
+                                       <content>
+                                          <TextArea fx:id="notes" />
+                                       </content>
+                                    </ScrollPane>
                                  </content>
-                              </ScrollPane>
+                              </TitledPane>
                           </items>
                         </SplitPane>
                     </items>
@@ -122,14 +126,14 @@
             </SplitPane>
          </items>
     </SplitPane>
-      <VBox fx:id="details" VBox.vgrow="ALWAYS">
+      <VBox VBox.vgrow="ALWAYS">
          <children>
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Details" wrappingWidth="865.13671875">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </Text>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="None" wrappingWidth="867.0">
+            <Text fx:id="details" strokeType="OUTSIDE" strokeWidth="0.0" text="None" wrappingWidth="867.0" VBox.vgrow="ALWAYS">
                <font>
                   <Font size="14.0" />
                </font>
